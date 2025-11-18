@@ -7,69 +7,73 @@ require "show_account_backend.php";
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instagram Login</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>KMNSTA Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: #fafafa;
-    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+    font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
-
-.insta-gradient {
-    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-    /* -webkit-background-clip: text; */
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 20px;
+    margin:0;
+    color:white;
 }
 
 .login-box {
-    max-width: 380px;
-    padding: 30px 25px;
-    background: #fff;
-    border: 1px solid #dbdbdb;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 360px;
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
     text-align: center;
 }
 
+.insta-gradient {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #ff004c, #ffa600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .saved-account {
-    border: 1px solid #dbdbdb;
-    border-radius: 20px;
-    padding: 12px 20px;
-    margin-bottom: 15px;
-    background: #fafafa;
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    padding: 14px;
+    border-radius: 16px;
+    margin-bottom: 12px;
     cursor: pointer;
-    position: relative;
-    transition: background 0.2s, max-height 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
     overflow: hidden;
 }
 
 .saved-account:hover {
-    background: #f0f0f0;
+    background: rgba(255,255,255,0.1);
 }
 
 .saved-account img {
-    width: 40px;
-    height: 40px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 12px;
+    border: 2px solid #ff004c;
     object-fit: cover;
-    vertical-align: middle;
 }
 
 .saved-account span {
     font-weight: 600;
-    vertical-align: middle;
 }
 
 .password-section {
+    width: 100%;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
@@ -77,44 +81,58 @@ body {
 }
 
 .password-section.open {
-    max-height: 150px;
+    max-height: 140px;
 }
 
 .password-section input {
     width: 100%;
-    padding: 8px 10px;
+    padding: 10px;
     margin-bottom: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    outline: none;
+}
+
+.password-section input:focus {
+    border-color: #ff004c;
+    box-shadow: 0 0 8px #ff004c88;
 }
 
 .password-section button {
     width: 100%;
-    padding: 8px;
-    border-radius: 6px;
+    padding: 10px;
     border: none;
-    background-color: #4A6CF7;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #ff004c, #ff7a00);
     color: white;
+    font-weight: 600;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .password-section button:hover {
-    background-color: #3756d8;
+    transform: scale(1.03);
+    box-shadow: 0 0 10px #ff004c99;
 }
 
 .create-btn {
-    border: none;
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-    color: white;
-    border-radius: 8px;
+    background: linear-gradient(45deg, #ff004c, #ff7a00);
+    border: none;
+    border-radius: 12px;
     font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .create-btn:hover {
-    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 0 12px #ff004c88;
 }
 </style>
 </head>
@@ -122,7 +140,7 @@ body {
 
 <div class="login-box">
 
-    <h3 class="insta-gradient">kmnsta</h3>
+    <h3 class="insta-gradient">KMNSTA</h3>
 
     <?php
     $sql = "SELECT * FROM accounts WHERE user_id = $user_id";
@@ -134,12 +152,12 @@ body {
             $acc_username = $row['acc_username'];
             $acc_profile = !empty($row['profile_img']) ? $row['profile_img'] : 'default-avatar.png';
     ?>
-            <div class="saved-account" onclick="togglePassword(this, event)">
-                <img src="<?php echo $acc_profile; ?>" alt="Profile">
-                <span><?php echo htmlspecialchars($acc_username); ?></span>
+            <div class="saved-account" onclick="togglePassword(this,event)">
+                <img src="<?= $acc_profile ?>" alt="Profile">
+                <span><?= htmlspecialchars($acc_username) ?></span>
                 <div class="password-section">
                     <form action="acc_login_backend.php" method="post">
-                        <?php echo '<input type="hidden" name="acc_id" value="'.$acc_id.'">';?>
+                        <input type="hidden" name="acc_id" value="<?= $acc_id ?>">
                         <input type="password" name="acc_password" placeholder="Enter password" required>
                         <button type="submit" name="acc_login_btn">Login</button>
                     </form>
@@ -179,5 +197,3 @@ function togglePassword(accountDiv, event) {
 
 </body>
 </html>
-
-

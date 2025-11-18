@@ -173,12 +173,7 @@ body {
 </head>
 
 <body>
-
-<!-- TOP NAV -->
-<div class="navbar-custom">
-  <div class="nav-title">KMSTA</div>
-  <i data-lucide="search" class="nav-icon"></i>
-</div>
+<?php include "navbar.php"; ?>
 
 <!-- STORIES -->
 <div class="story-bar">
