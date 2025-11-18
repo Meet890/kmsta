@@ -10,10 +10,19 @@ if(isset($_POST['signup_btn'])){
     $user_password = $_POST['user_password'];
     $add_user = "INSERT INTO user_details (user_name, user_age , user_gender , user_ph , user_email , user_dob , user_password) VALUES ('$user_name','$user_age','$user_gender','$user_ph','$user_email','$user_dob','$user_password')";
     if($conn->query($add_user)==true){
-    echo "INSERTED";
+    // echo "INSERTED";
+    $sql = "select user_id,user_name from user_details where user_name ='$user_name' and user_ph =$user_ph";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+    $_SESSION["user_id"] = $row["user_id"] ;
+    $_SESSION["user_name"] = $row["user_name"] ;
+    header("Location: show_account.php");
+}
     }else{
         echo "error";
     }
+
 }
 $conn->close();
 ?>
