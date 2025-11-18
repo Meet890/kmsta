@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 18, 2025 at 05:57 AM
+-- Generation Time: Nov 18, 2025 at 12:44 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -38,7 +38,17 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`acc_id`),
   UNIQUE KEY `acc_username` (`acc_username`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`acc_id`, `user_id`, `acc_profile_photo`, `acc_bio`, `acc_username`, `acc_password`) VALUES
+(101, 1, NULL, NULL, 'meet', 'meet@123'),
+(102, 1, NULL, NULL, 'Meet2', 'meet@123'),
+(107, 9, '', 'Hello i am meet ', 'Meet890', 'Meet@890'),
+(109, 9, '', 'Hello i am meet ', 'Meet8890', 'Meetrn@890');
 
 -- --------------------------------------------------------
 
@@ -136,12 +146,22 @@ CREATE TABLE IF NOT EXISTS `post` (
   `acc_id` int NOT NULL,
   `post_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `post_location` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `post_caption` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `like_id` int DEFAULT NULL,
   `comment_id` int DEFAULT NULL,
   PRIMARY KEY (`post_id`),
   KEY `like_id` (`like_id`,`comment_id`),
   KEY `acc_id` (`acc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`post_id`, `acc_id`, `post_type`, `post_location`, `post_caption`, `like_id`, `comment_id`) VALUES
+(2, 107, 'image', 'post_691c699da33251.43570467_c076459163.jpg', 'BCA SEM-6', NULL, NULL),
+(3, 107, 'image', 'post_691c69c03a77f3.79689772_9fe5c0ba18.jpg', 'SSC', NULL, NULL),
+(4, 107, 'image', 'post_691c6a193350f1.90359808_1d3ac69781.jpg', 'HSC', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -163,14 +183,20 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   UNIQUE KEY `user_email` (`user_email`),
   UNIQUE KEY `user_ph` (`user_ph`),
   KEY `Index_user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user_details`
 --
 
 INSERT INTO `user_details` (`user_id`, `user_name`, `user_age`, `user_gender`, `user_ph`, `user_email`, `user_dob`, `user_password`) VALUES
-(1, 'Meet', 24, 'Male', 7774441112, 'meetrn7890@gmail.com', '2002-11-27', 'meet@2002');
+(1, 'Meet', 24, 'Male', 7774441112, 'meetrn7890@gmail.com', '2002-11-27', 'meet@2002'),
+(2, 'Krupal', 22, 'male', 9999999989, 'krupal@gmail.com', '2004-11-27', 'krupal@123'),
+(6, 'Krupal2', 22, 'male', 9999999999, 'krupal2@gmail.com', '2004-11-27', 'krupal@123'),
+(8, 'uday', 22, 'male', 123456456, 'uday@gmail.com', '2002-11-27', 'uday@123'),
+(9, 'meet', 24, 'male', 4564564564, 'meet12@gmail.com', '2002-11-27', 'Meet@123'),
+(10, 'anjli', 23, 'femal', 1112223334, 'anjli@gmail.com', '2003-11-27', 'anjli@123'),
+(11, 'anjli2', 23, 'femal', 1112223335, 'anjli2@gmail.com', '2003-11-27', 'anjli@123');
 
 --
 -- Constraints for dumped tables

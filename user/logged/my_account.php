@@ -7,7 +7,11 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<?php 
+require_once "conn.php";
 
+
+?>
 <style>
 /* BODY & FONT */
 body {
@@ -229,14 +233,48 @@ hr {
     <hr>
 
     <!-- POSTS GRID -->
-    <div class="gallery">
-        <img src="img/post1.jpg" alt="Post 1">
-        <img src="img/post2.jpg" alt="Post 2">
-        <img src="img/post3.jpg" alt="Post 3">
-        <img src="img/post4.jpg" alt="Post 4">
-        <img src="img/post5.jpg" alt="Post 5">
-        <img src="img/post6.jpg" alt="Post 6">
-    </div>
+   <div class="gallery">
+<?php
+
+//  echo '<pre>';
+//     var_dump($_SESSION);
+//     echo '</pre>';
+$acc_id= $_SESSION["acc_id"];
+$sql = "SELECT * FROM post WHERE acc_id = $acc_id ORDER BY post_id DESC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+
+    while ($row = $result->fetch_assoc()) {
+
+        $post_file = $row['post_location'];
+        $file_type = $row['post_type'];  // image or video
+        $file_path = "uploads/" . $post_file;
+
+        // If image → show <img>
+        if ($file_type == "image") {
+            echo '
+                <img src="'.$file_path.'" alt="post-image" class="gallery-img">
+            ';
+        }
+
+        // If video → show <video>
+        if ($file_type == "video") {
+            echo '
+                <video class="gallery-img" controls>
+                    <source src="'.$file_path.'" type="video/mp4">
+                </video>
+            ';
+        }
+
+    }
+
+} else {
+    echo "<p>No posts .</p>";
+}
+
+?>
+</div>
 
 </div>
 
