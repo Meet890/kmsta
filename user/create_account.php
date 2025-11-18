@@ -86,7 +86,7 @@ button:hover {
 <body>
 
 <div class="container">
-    <form class="card" action="/create_account" method="POST" enctype="multipart/form-data">
+    <form class="card" action="create_Account_backend.php" method="POST" enctype="multipart/form-data">
 
         <h2>Create Your Account</h2>
 
@@ -108,7 +108,7 @@ button:hover {
         <label>Password</label>
         <input type="password" name="acc_password" placeholder="Enter password" required>
 
-        <button type="submit">Create Account</button>
+        <button type="submit" name ="acc_submit" id="acc_submit">Create Account</button>
 
     </form>
 </div>
