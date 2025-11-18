@@ -12,7 +12,11 @@ if(isset($_POST["acc_login_btn"])){
         $_SESSION['acc_id']=$row["acc_id"];
         echo "this is session".$_SESSION['acc_id'];
         //inport header
-        header("Location: home.php");
+        header("Location: logged/home.php");
+
+    }
+    else{
+        echo "<h3>wrong Password<h3>";
     }
 }
 
