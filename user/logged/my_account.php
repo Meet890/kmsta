@@ -115,6 +115,58 @@ hr {
     box-shadow: 0 0 15px #ff004caa;
 }
 
+/* ADD POST MODAL */
+#addPostModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+#addPostModal .modal-content {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 20px #ff004caa;
+}
+#addPostModal h3 {
+    margin-bottom: 15px;
+    text-align: center;
+    color: #ff004c;
+}
+#addPostModal input,
+#addPostModal textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #111;
+    color: white;
+}
+#addPostModal button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+#addPostModal button[type="submit"] {
+    background: linear-gradient(45deg, #ff004c, #ffae00);
+    color: white;
+}
+#addPostModal button#closeModal {
+    background: #333;
+    color: white;
+    margin-top: 10px;
+}
+
 /* RESPONSIVE */
 @media screen and (max-width: 768px) {
     .profile-wrapper {
@@ -156,7 +208,11 @@ hr {
         <img src="img/user_profile.jpg" alt="Profile Picture">
 
         <div>
-            <div class="username">my_username</div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div class="username">my_username</div>
+                <button class="edit-btn" id="addPostBtn">Add Post</button>
+            </div>
+
             <button class="edit-btn">Edit Profile</button>
 
             <div class="stats">
@@ -167,6 +223,7 @@ hr {
 
             <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
         </div>
+        
     </div>
 
     <hr>
@@ -182,6 +239,40 @@ hr {
     </div>
 
 </div>
+
+<!-- ADD POST MODAL -->
+<div id="addPostModal" class="d-flex">
+    <div class="modal-content">
+        <h3>Add New Post</h3>
+        <form action="upload_post.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="post_file" accept=".jpg,.jpeg,.png,.mp4" required>
+            <textarea name="post_caption" placeholder="Write a caption..."></textarea>
+            <button type="submit" name="upload_post">Upload</button>
+        </form>
+        <button id="closeModal">Cancel</button>
+    </div>
+</div>
+
+<script>
+// Show/Hide Add Post Modal
+const addPostBtn = document.getElementById('addPostBtn');
+const addPostModal = document.getElementById('addPostModal');
+const closeModal = document.getElementById('closeModal');
+
+addPostBtn.addEventListener('click', () => {
+    addPostModal.style.display = 'flex';
+});
+
+closeModal.addEventListener('click', () => {
+    addPostModal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === addPostModal) {
+        addPostModal.style.display = 'none';
+    }
+});
+</script>
 
 </body>
 </html>
