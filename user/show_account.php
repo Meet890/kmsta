@@ -1,36 +1,7 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
+<?php
+require "show_account_backend.php";
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <?php
-    require "show_account_backend.php";
-
-    ?>
-    <div class="container justify-content-center" >
-
-        <div class="row pt-4 d-flex">
-            <div class="col-3 mb-3 mb-sm-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</body>
-
-</html> -->
+?>
 
 
 <!DOCTYPE html>
@@ -43,8 +14,84 @@
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .saved-account {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 10px;
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .saved-account:hover {
+            background: #f0f0f0;
+        }
+
+        .saved-account img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .saved-account span {
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .password-section {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-section input {
+            width: calc(100% - 20px);
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            display: block;
+        }
+
+        .password-section button {
+            padding: 8px 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: none;
+            background: #4A6CF7;
+            color: white;
+            cursor: pointer;
+        }
+
+        .password-section button:hover {
+            background: #3756d8;
+        }
+
         body {
             background: #fafafa;
             font-family: 'Segoe UI', sans-serif;
@@ -113,23 +160,65 @@
         <h3 class="insta-gradient mb-4">kmnsta</h3>
 
         <!-- Saved Account 1 -->
-        <div class="saved-account border border-black">
-            <span>username_one</span>
-            <button class="btn btn-outline-dark btn-sm">Login</button>
-        </div>
 
-        <!-- Saved Account 2 -->
-        <div class="saved-account border border-black">
-            <span>username_two</span>
-            <button class="btn btn-outline-dark btn-sm">Login</button>
-        </div>
 
-        <!-- Create New Account -->
+
+
+
+
+
+        <?php
+        $sql = "select * from accounts where user_id= $user_id";
+        $result = $conn->query($sql);
+
+        if ($result == true) {
+            echo'<div class="card"><h2>Login</h2>';
+            while ($row = mysqli_fetch_array($result)) {
+
+                $acc_id = $row["acc_id"];
+                $acc_username = $row["acc_username"];
+
+                ?>
+                
+                    
+
+                    <!-- Saved Account 1 -->
+                    <div class="saved-account" onclick="togglePassword(this)">
+                        <img src="" alt="Profile">
+                        <span><?php echo $acc_username; ?></span>
+                        <div class="password-section">
+                            <input type="password" placeholder="Enter password">
+                            <a href="acc_login_backend.php"><button>Login</button></a>
+                        </div>
+                    </div>
+
+
+
+                
+                <?php
+            }
+            echo'</div>';
+        } else {
+            echo "error";
+        }
+        ?>
+
         <form action="" method="post">
-            <button class="create-btn" name="create_acc_btn">Create one's</button>
+            <button class="create-btn" name="create_acc_btn">Create ones</button>
         </form>
     </div>
 
 </body>
+<script>
+    function togglePassword(accountDiv) {
+        const section = accountDiv.querySelector('.password-section');
+        // Toggle visibility
+        if (section.style.display === 'block') {
+            section.style.display = 'none';
+        } else {
+            section.style.display = 'block';
+        }
+    }
+</script>
 
 </html>
