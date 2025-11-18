@@ -133,9 +133,9 @@ body {
                 <span><?php echo htmlspecialchars($acc_username); ?></span>
                 <div class="password-section">
                     <form action="acc_login_backend.php" method="post">
-                        <input type="hidden" name="acc_id" value="<?php echo $acc_id; ?>">
+                        <?php echo '<input type="hidden" name="acc_id" value="'.$acc_id.'">';?>
                         <input type="password" name="acc_password" placeholder="Enter password" required>
-                        <button type="submit">Login</button>
+                        <button type="submit" name="acc_login_btn">Login</button>
                     </form>
                 </div>
             </div>
