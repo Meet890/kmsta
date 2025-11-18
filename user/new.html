@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Saved Account</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.saved-account {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.saved-account:hover {
+    background: #f0f0f0;
+}
+
+.saved-account img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+.saved-account span {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.password-section {
+    margin-top: 10px;
+    display: none;
+}
+
+.password-section input {
+    width: calc(100% - 20px);
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    display: block;
+}
+
+.password-section button {
+    padding: 8px 10px;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background: #4A6CF7;
+    color: white;
+    cursor: pointer;
+}
+
+.password-section button:hover {
+    background: #3756d8;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Login</h2>
+
+    <!-- Saved Account 1 -->
+    <div class="saved-account" onclick="togglePassword(this)">
+        <img src="default-avatar.png" alt="Profile">
+        <span>John Doe</span>
+        <div class="password-section">
+            <input type="password" placeholder="Enter password">
+            <button>Login</button>
+        </div>
+    </div>
+
+    <!-- Saved Account 2 -->
+    <div class="saved-account" onclick="togglePassword(this)">
+        <img src="default-avatar.png" alt="Profile">
+        <span>Jane Smith</span>
+        <div class="password-section">
+            <input type="password" placeholder="Enter password">
+            <button>Login</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function togglePassword(accountDiv) {
+    const section = accountDiv.querySelector('.password-section');
+    // Toggle visibility
+    if(section.style.display === 'block') {
+        section.style.display = 'none';
+    } else {
+        section.style.display = 'block';
+    }
+}
+</script>
+
+</body>
+</html>
