@@ -4,85 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background: #f4f6fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ------------ GLOBAL THEME ------------ */
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0c0c0c);
     height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    overflow: hidden;
 }
 
-.container {
+/* Animated background glow */
+body::before {
+    content: "";
+    position: fixed;
     width: 100%;
-    max-width: 420px;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,0,76,0.15), transparent 60%);
+    filter: blur(80px);
+    animation: glow 6s infinite alternate ease-in-out;
+    z-index: -1;
+}
+@keyframes glow {
+    from { transform: translateY(-20px); opacity: 0.7; }
+    to   { transform: translateY(20px); opacity: 1; }
 }
 
+/* ------------ CARD -------------- */
 .card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 380px;
+    padding: 30px;
+    background: rgba(20, 20, 20, 0.75);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0px 5px 25px rgba(0,0,0,0.4);
+    animation: cardPop 0.8s ease-out;
+}
+
+@keyframes cardPop {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .card h2 {
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: 600;
+    background: linear-gradient(45deg, #ff004c, #ffa600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 25px;
 }
 
+/* ------------ PROFILE PHOTO -------------- */
 .profile-photo {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .profile-photo img {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ddd;
-    margin-bottom: 10px;
+    border: 3px solid #ff004c;
+    box-shadow: 0 0 15px #ff004cc0;
+    transition: 0.3s;
+}
+.profile-photo img:hover {
+    transform: scale(1.05);
 }
 
-input[type="file"] {
-    margin-top: 10px;
-}
-
+/* ------------ INPUTS -------------- */
 label {
-    font-weight: bold;
-    margin-top: 10px;
     display: block;
+    margin: 12px 0 6px;
+    font-weight: 500;
 }
 
 input, textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    color: white;
     font-size: 14px;
+    outline: none;
+    transition: 0.3s;
 }
 
+input:focus, textarea:focus {
+    border-color: #ff004c;
+    box-shadow: 0 0 8px #ff004c80;
+}
+
+/* ------------ BUTTON -------------- */
 button {
     width: 100%;
+    margin-top: 25px;
     padding: 12px;
-    background: #4A6CF7;
-    color: white;
+    background: linear-gradient(135deg, #ff004c, #ff6a00);
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-top: 20px;
+    color: white;
+    font-size: 17px;
+    border-radius: 12px;
+    font-weight: 600;
     cursor: pointer;
+    transition: 0.35s;
+    letter-spacing: 0.5px;
 }
 
 button:hover {
-    background: #3756d8;
+    transform: scale(1.03);
+    box-shadow: 0 0 12px #ff004caa;
 }
 
-    </style>
+/* File input */
+input[type="file"] {
+    border: none;
+    background: transparent;
+    margin-top: 10px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
@@ -108,14 +164,15 @@ button:hover {
         <label>Password</label>
         <input type="password" name="acc_password" placeholder="Enter password" required>
 
-        <button type="submit" name ="acc_submit" id="acc_submit">Create Account</button>
+        <button type="submit" name="acc_submit">Create Account</button>
 
     </form>
 </div>
 
 <script>
 function previewPhoto(e) {
-    document.getElementById('preview').src = URL.createObjectURL(e.target.files[0]);
+    document.getElementById('preview').src =
+        URL.createObjectURL(e.target.files[0]);
 }
 </script>
 
