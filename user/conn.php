@@ -3,7 +3,6 @@ $server = "localhost";
 $username = "root";
 $password = "";
 $db = "insta";
-
 $conn = new mysqli("$server","$username","$password","$db");
 
 if($conn -> connect_error){
