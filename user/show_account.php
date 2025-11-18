@@ -22,7 +22,7 @@ body {
 
 .insta-gradient {
     background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-    -webkit-background-clip: text;
+    /* -webkit-background-clip: text; */
     -webkit-text-fill-color: transparent;
     font-weight: 700;
     text-align: center;
