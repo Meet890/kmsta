@@ -1,5 +1,5 @@
 <?php
-require "show_account_backend.php"; // Database connection and $user_id
+require "show_account_backend.php";
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +47,8 @@ body {
     background: #fafafa;
     cursor: pointer;
     position: relative;
-    transition: background 0.2s;
+    transition: background 0.2s, max-height 0.3s ease;
+    overflow: hidden;
 }
 
 .saved-account:hover {
@@ -69,8 +70,14 @@ body {
 }
 
 .password-section {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
     margin-top: 10px;
+}
+
+.password-section.open {
+    max-height: 150px;
 }
 
 .password-section input {
@@ -118,7 +125,6 @@ body {
     <h3 class="insta-gradient">kmnsta</h3>
 
     <?php
-    // Fetch saved accounts
     $sql = "SELECT * FROM accounts WHERE user_id = $user_id";
     $result = $conn->query($sql);
 
@@ -128,7 +134,7 @@ body {
             $acc_username = $row['acc_username'];
             $acc_profile = !empty($row['profile_img']) ? $row['profile_img'] : 'default-avatar.png';
     ?>
-            <div class="saved-account" onclick="togglePassword(this)">
+            <div class="saved-account" onclick="togglePassword(this, event)">
                 <img src="<?php echo $acc_profile; ?>" alt="Profile">
                 <span><?php echo htmlspecialchars($acc_username); ?></span>
                 <div class="password-section">
@@ -146,7 +152,6 @@ body {
     }
     ?>
 
-    <!-- Create New Account -->
     <form action="" method="post">
         <button class="create-btn" name="create_acc_btn">Create New Account</button>
     </form>
@@ -154,16 +159,21 @@ body {
 </div>
 
 <script>
-function togglePassword(accountDiv) {
+function togglePassword(accountDiv, event) {
     const section = accountDiv.querySelector('.password-section');
+    const input = section.querySelector('input[type="password"]');
 
-    // Close other open password sections
+    if(event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON') return;
+
     document.querySelectorAll('.password-section').forEach(sec => {
-        if(sec !== section) sec.style.display = 'none';
+        if(sec !== section) sec.classList.remove('open');
     });
 
-    // Toggle current section
-    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+    section.classList.toggle('open');
+
+    if(section.classList.contains('open')) {
+        input.focus();
+    }
 }
 </script>
 
