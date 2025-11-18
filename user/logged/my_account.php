@@ -217,7 +217,7 @@ hr {
                 <button class="edit-btn" id="addPostBtn">Add Post</button>
             </div>
 
-            <button class="edit-btn">Edit Profile</button>
+            <button class="edit-btn"><a href="edit_profile.php">Edit Profile</a></button>
 
             <div class="stats">
                 <span><strong>12</strong> posts</span>

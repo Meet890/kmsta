@@ -209,7 +209,8 @@ body {
     <strong>Alex</strong>
   </div>
 
-  <img src="post1.jpg" class="post-img">
+<img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1170&q=80" class="post-img" alt="Computer">
+
 
   <div class="post-actions">
     <span>❤️</span>
