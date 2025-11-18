@@ -8,8 +8,11 @@ if(isset($_POST['login_btn'])){
     $res = $conn->query($sql);
 
     if($res -> num_rows > 0){
+        $row = $res -> fetch_assoc();
+        $_SESSION["user_id"] = $row["user_id"];
+        $_SESSION["user_name"] = $row["user_name"];
         $_SESSION['user_email'] = $user_email;
-        header('Location: Home.php');
+        header('Location: show_account.php');
         exit();
 }else {
     header('Location: signup.php');

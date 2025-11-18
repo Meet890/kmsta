@@ -1,6 +1,8 @@
 <?php
 require 'conn.php';
-session_start();
+echo '<pre>';
+    var_dump($_SESSION);
+    echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +45,7 @@ session_start();
     </div>
     <div class="text-center">
       <img src="avatar3.jpg" class="story-img">
-      <small class="d-block">sofia</small>
+      <small class="d-block">Bhoomi</small>
     </div>
     <!-- repeat -->
   </div>

@@ -152,7 +152,7 @@ body {
     }
     ?>
 
-    <form action="" method="post">
+    <form action="create_account.php" method="post">
         <button class="create-btn" name="create_acc_btn">Create New Account</button>
     </form>
 
