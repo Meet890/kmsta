@@ -27,7 +27,7 @@
 
     <div class="text-center mt-3">
       <span>Already have an account?</span>
-      <a href="login.html">Login</a>
+      <a href="login.php">Login</a>
     </div>
 
   </div>
