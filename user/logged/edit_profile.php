@@ -39,7 +39,7 @@ if(isset($_POST['update_profile'])){
     }
 
     if(!isset($error)){
-        $update_sql = "UPDATE users SET user_name = ?, user_age = ?, user_gender = ?, user_ph = ?, user_email = ?, user_dob = ? $password_sql WHERE user_id = ?";
+        $update_sql = "UPDATE user_details SET user_name = ?, user_age = ?, user_gender = ?, user_ph = ?, user_email = ?, user_dob = ? $password_sql WHERE user_id = ?";
         $stmt = $conn->prepare($update_sql);
         $stmt->bind_param("sissssi", $user_name, $user_age, $user_gender, $user_ph, $user_email, $user_dob, $user_id);
         if($stmt->execute()){

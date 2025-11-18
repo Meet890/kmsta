@@ -42,7 +42,7 @@
       <li><a href="my_account.php" style=" font-size: 15px; display:block; padding: 10px 15px; color: white; text-decoration: none;">View Profile</a></li>
       <li><a href="edit_profile.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Edit Personal Details</a></li>
       <li><hr style="margin: 4px 0; border-color: #444;"></li>
-      <li><a href="logout.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Logout</a></li>
+      <li><a href="../logout.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Logout</a></li>
     </ul>
   </div>
 
