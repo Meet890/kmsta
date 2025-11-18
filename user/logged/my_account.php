@@ -7,11 +7,11 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
 <?php 
 require_once "conn.php";
-
-
 ?>
+
 <style>
 /* BODY & FONT */
 body {
@@ -106,15 +106,16 @@ hr {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
 }
-.gallery img {
+.gallery img, .gallery video {
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 14px;
     transition: 0.3s;
     border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
 }
-.gallery img:hover {
+.gallery img:hover, .gallery video:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px #ff004caa;
 }
@@ -169,6 +170,27 @@ hr {
     background: #333;
     color: white;
     margin-top: 10px;
+}
+
+/* VIEW POST MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #ff004caa;
 }
 
 /* RESPONSIVE */
@@ -235,51 +257,35 @@ hr {
     <!-- POSTS GRID -->
    <div class="gallery">
 <?php
-
-//  echo '<pre>';
-//     var_dump($_SESSION);
-//     echo '</pre>';
 $acc_id= $_SESSION["acc_id"];
 $sql = "SELECT * FROM post WHERE acc_id = $acc_id ORDER BY post_id DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-
     while ($row = $result->fetch_assoc()) {
 
         $post_file = $row['post_location'];
         $file_type = $row['post_type'];  // image or video
         $file_path = "uploads/" . $post_file;
 
-        // If image → show <img>
         if ($file_type == "image") {
-            echo '
-                <img src="'.$file_path.'" alt="post-image" class="gallery-img">
-            ';
+            echo '<img src="'.$file_path.'" alt="post-image" class="gallery-img" onclick="openModal(\''.$file_path.'\', \'image\')">';
         }
 
-        // If video → show <video>
         if ($file_type == "video") {
-            echo '
-                <video class="gallery-img" controls>
-                    <source src="'.$file_path.'" type="video/mp4">
-                </video>
-            ';
+            echo '<video class="gallery-img" onclick="openModal(\''.$file_path.'\', \'video\')"><source src="'.$file_path.'" type="video/mp4"></video>';
         }
-
     }
-
 } else {
-    echo "<p>No posts .</p>";
+    echo "<p>No posts.</p>";
 }
-
 ?>
 </div>
 
 </div>
 
 <!-- ADD POST MODAL -->
-<div id="addPostModal" class="d-flex">
+<div id="addPostModal">
     <div class="modal-content">
         <h3>Add New Post</h3>
         <form action="upload_post.php" method="post" enctype="multipart/form-data">
@@ -291,17 +297,23 @@ if ($result->num_rows > 0) {
     </div>
 </div>
 
+<!-- VIEW POST MODAL -->
+<div id="myModal" class="modal">
+    <img id="modalImg" class="modal-content" style="display:none;">
+    <video id="modalVideo" class="modal-content" controls style="display:none; max-height:90vh;"></video>
+</div>
+
 <script>
-// Show/Hide Add Post Modal
+// ===== ADD POST MODAL =====
 const addPostBtn = document.getElementById('addPostBtn');
 const addPostModal = document.getElementById('addPostModal');
-const closeModal = document.getElementById('closeModal');
+const closeAddModalBtn = document.getElementById('closeModal');
 
 addPostBtn.addEventListener('click', () => {
     addPostModal.style.display = 'flex';
 });
 
-closeModal.addEventListener('click', () => {
+closeAddModalBtn.addEventListener('click', () => {
     addPostModal.style.display = 'none';
 });
 
@@ -310,6 +322,40 @@ window.addEventListener('click', (e) => {
         addPostModal.style.display = 'none';
     }
 });
+
+// ===== VIEW POST MODAL =====
+const viewModal = document.getElementById("myModal");
+const modalImg = document.getElementById("modalImg");
+const modalVideo = document.getElementById("modalVideo");
+
+function openModal(fileSrc, type) {
+    viewModal.style.display = "flex";
+
+    if(type === "image") {
+        modalImg.src = fileSrc;
+        modalImg.style.display = "block";
+        modalVideo.style.display = "none";
+    } else if(type === "video") {
+        modalVideo.src = fileSrc;
+        modalVideo.style.display = "block";
+        modalImg.style.display = "none";
+        modalVideo.load();
+        modalVideo.play();
+    }
+}
+
+viewModal.addEventListener("click", function(e) {
+    if(e.target === viewModal) {
+        closeViewModal();
+    }
+});
+
+function closeViewModal() {
+    viewModal.style.display = "none";
+    modalImg.src = "";
+    modalVideo.pause();
+    modalVideo.src = "";
+}
 </script>
 
 </body>
