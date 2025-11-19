@@ -150,7 +150,7 @@ body {
         while($row = mysqli_fetch_assoc($result)) {
             $acc_id = $row['acc_id'];
             $acc_username = $row['acc_username'];
-            $acc_profile = !empty($row['profile_img']) ? $row['profile_img'] : 'default-avatar.png';
+            $acc_profile = !empty($row['acc_profile_photo']) ? 'logged/uploads/'.$row['acc_profile_photo'] : 'logged/uploads/default2.png';
     ?>
             <div class="saved-account" onclick="togglePassword(this,event)">
                 <img src="<?= $acc_profile ?>" alt="Profile">
@@ -172,6 +172,9 @@ body {
 
     <form action="create_account.php" method="post">
         <button class="create-btn" name="create_acc_btn">Create New Account</button>
+    </form>
+    <form action="logout.php" method="post">
+        <button type="create-btn" name="acc_logout">Logout</button>
     </form>
 
 </div>

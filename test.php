@@ -28,7 +28,7 @@ Pendding
 *****
 -in user_profile.php post is not open in full screen
 -my_account upload profile photo is not working  
-
+-my_account inside add post cancle button is not working 
 
 
 

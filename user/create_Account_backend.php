@@ -5,17 +5,22 @@ if (isset($_POST['acc_submit'])) {
     $acc_username = $_POST['acc_username'];
     $acc_password = $_POST['acc_password'];
     $acc_bio = $_POST['acc_bio'];
+    $acc_profile_photo = $_POST['acc_profile_photo'];
     $user_id = $_SESSION['user_id'];
-    $ins_acc = "INSERT INTO accounts VALUES ('',$user_id,'','$acc_bio','$acc_username','$acc_password')";
+    $ins_acc = "INSERT INTO accounts VALUES ('',$user_id,'$acc_profile_photo','$acc_bio','$acc_username','$acc_password')";
     $res = mysqli_query($conn, $ins_acc);
 
     // echo $ins_acc;
-    if ($res >0) {
+    if ($res > 0) {
         $sql = "select * from accounts where user_id = $user_id and acc_password = '$acc_password' ";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_array($result);
             $_SESSION['acc_id'] = $row["acc_id"];
+            $_SESSION["user_id"] = $row["user_id"];
+            $_SESSION["acc_username"] = $row["acc_username"];
+            $_SESSION["acc_profile_photo"] = $row["acc_profile_photo"];
+            $_SESSION["acc_bio"] = $row["acc_bio"];
             echo "this is session" . $_SESSION['acc_id'];
             header('Location: logged/home.php');
             exit;

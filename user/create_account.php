@@ -148,7 +148,7 @@ input[type="file"] {
 
         <!-- Profile Photo -->
         <div class="profile-photo">
-            <img id="preview" src="default-avatar.png" alt="Profile Photo">
+            <img id="preview" src="logged/uploads/default2.png" alt="Profile Photo">
             <input type="file" name="acc_profile_photo" accept="image/*" onchange="previewPhoto(event)">
         </div>
 
@@ -165,6 +165,7 @@ input[type="file"] {
         <input type="password" name="acc_password" placeholder="Enter password" required>
 
         <button type="submit" name="acc_submit">Create Account</button>
+        
 
     </form>
 </div>
