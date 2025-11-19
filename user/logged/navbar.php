@@ -93,6 +93,7 @@
   cursor: pointer;
 }
 
+
 /* -------- SEARCH BAR -------- */
 .nav-search {
   position: relative;

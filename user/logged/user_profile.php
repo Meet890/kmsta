@@ -1,7 +1,5 @@
 <?php
 //session_start();
-$_SESSION['acc_id'] = 1001;
-$_SESSION['username'] = 'MEEt';
 require 'conn.php';
 ?>
 
@@ -243,7 +241,7 @@ hr {
 
         <div>
             <div style="display:flex; align-items:center; gap:10px;">
-                <div class="username"><?php echo $_SESSION['username']; ?></div>
+                <div class="username"><?php echo $_SESSION['user_username']; ?></div>
             </div>
 
             <a href="edit_profile.php"><button class="edit-btn">Follow</button></a>
