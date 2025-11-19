@@ -19,7 +19,9 @@ Day-2
 -follow other persons
 -view other persons posts 
 -dynamic followers,following,posts in profile page
+-dynamic followers,following,posts in user_profile page
 -show profile photo in login,home,profile pages
+-add message opetion
 
 
 Pendding
@@ -29,7 +31,6 @@ Pendding
 -see there posts , like it , comment it
 -add story's
 -view other persons story's
--add message opetion *if it is possible
 
 *****errors*****
 -in user_profile.php post is not open in full screen
