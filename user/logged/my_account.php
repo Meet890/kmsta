@@ -305,7 +305,7 @@ if($result_user && $result_user->num_rows > 0){
                     <span><strong><?php echo $postsCount; ?></strong> posts</span>
                     <span><strong><?php echo $followers; ?></strong> followers</span>
                     <span><strong><?php echo $following; ?></strong> following</span>
-            </div>
+        </div>
                 </div>
 
                 <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
