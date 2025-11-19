@@ -10,6 +10,9 @@ if(isset($_POST["acc_login_btn"])){
     if(mysqli_num_rows($result)> 0){
         $row=mysqli_fetch_array($result);
         $_SESSION['acc_id']=$row["acc_id"];
+        $_SESSION["acc_username"]=$row["acc_username"];
+        $_SESSION["acc_profile_photo"]=$row["acc_profile_photo"];
+        $_SESSION["acc_bio"]=$row["acc_bio"];
         echo "this is session".$_SESSION['acc_id'];
         //inport header
         header("Location: logged/home.php");
