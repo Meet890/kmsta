@@ -1,7 +1,7 @@
 <?php
 //session_start();
 require 'conn.php';
-$acc_id=$_SESSION['acc_id'];
+$acc_id = $_SESSION['acc_id'];
 $searchUserId = $_GET["searchUserId"];
 $sql = "SELECT * FROM accounts WHERE acc_id = $searchUserId ";
 $result = $conn->query($sql);
@@ -333,7 +333,7 @@ if (isset($_POST['unfollow_btn'])) {
 
         <!-- PROFILE SECTION -->
         <div class="profile-wrapper">
-             <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
+            <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
 
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
@@ -356,10 +356,18 @@ if (isset($_POST['unfollow_btn'])) {
 
                     <?php if ($isFollowing): ?>
                         <button class="edit-btn" name="unfollow_btn" style="background:#444;">Following</button>
+
+
                     <?php else: ?>
                         <button class="edit-btn" name="follow_btn" style="background:#0095f6;">Follow</button>
                     <?php endif; ?>
                 </form>
+                <?php if ($isFollowing): ?>
+                    <form action="chat.php" method="GET">
+                        <input type="hidden" name="user" value="<?php echo $searchUserId; ?>">
+                        <button class="edit-btn" type="submit" name="submit_msg" style="background:#444;">Chat</button>
+                    </form>
+                <?php endif; ?>
 
                 <div class="stats">
                     <span><strong><?php echo $postsCount; ?></strong> posts</span>
@@ -404,7 +412,7 @@ if (isset($_POST['unfollow_btn'])) {
 
     </div>
 
-    
+
 
     <!-- VIEW POST MODAL -->
     <div id="myModal" class="modal">

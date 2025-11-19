@@ -1,4 +1,5 @@
 Dummy Instagram (new mini project)
+Day-1
 -signup user
 -login user
 -create account
@@ -11,21 +12,26 @@ Dummy Instagram (new mini project)
 -edit profile details & private details
 -build actractive UI with online AI reference
 
-Pendding
--all page check session session for redirect
+
+Day-2
+-search persons
 -show other persons
--delete own post
 -follow other persons
+-view other persons posts 
+-dynamic followers,following,posts in profile page
+-show profile photo in login,home,profile pages
+
+
+Pendding
+-Admin panel
+-all page check session session for redirect
+-delete own post
 -see there posts , like it , comment it
 -add story's
 -view other persons story's
--show profile photo in login,home,profile pages
--dynamic followers,following,posts in profile page
--search persons
--view recommended posts 
 -add message opetion *if it is possible
 
-*****
+*****errors*****
 -in user_profile.php post is not open in full screen
 -my_account upload profile photo is not working  
 -my_account inside add post cancle button is not working 
