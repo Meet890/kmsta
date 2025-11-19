@@ -183,8 +183,11 @@ body {
 </head>
 
 <body>
-
+<?php
+include"navbar.php";
+?>
 <!-- NAVBAR -->
+<<<<<<< Updated upstream
 <nav class="navbar-custom">
   <div class="nav-title">KMSTA</div>
 
@@ -208,6 +211,8 @@ body {
     </div>
   </div>
 </nav>
+=======
+>>>>>>> Stashed changes
 
 <!-- SEARCH RESULTS -->
 <div class="search-box">
