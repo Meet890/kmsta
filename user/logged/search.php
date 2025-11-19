@@ -130,10 +130,26 @@ if (isset($_POST['unfollow_btn'])) {
             align-items: center;
             background: rgba(25, 25, 25, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.08);
+             border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(255, 0, 76, 0.3);
             border-radius: 16px;
             overflow: hidden;
             padding: 14px;
             transition: 0.3s;
+        }
+
+        .profile-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(255, 0, 76, 0.3);
         }
 
         .user-card:hover {
