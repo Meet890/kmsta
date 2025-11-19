@@ -10,6 +10,7 @@ $sql_bio = "SELECT acc_bio FROM accounts WHERE acc_id = $acc_id LIMIT 1";
 $result_bio = $conn->query($sql_bio);
 
 
+// FIND TOTAL FOLLOWERS
 $sql = "SELECT COUNT(*) AS total FROM followers WHERE following_id = $acc_id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -300,9 +301,11 @@ if($result_user && $result_user->num_rows > 0){
                 <button class="edit-btn" id="addPostBtn">Add Post</button>
 
                 <div class="stats">
-                    <span><strong>12</strong> posts</span>
-                    <span><strong>230</strong> followers</span>
-                    <span><strong>180</strong> following</span>
+                    <div class="stats">
+    <span><strong><?php echo $postsCount; ?></strong> posts</span>
+    <span><strong><?php echo $followers; ?></strong> followers</span>
+    <span><strong><?php echo $following; ?></strong> following</span>
+</div>
                 </div>
 
                 <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
