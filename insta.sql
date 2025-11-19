@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 18, 2025 at 12:44 PM
+-- Generation Time: Nov 19, 2025 at 02:57 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`acc_id`),
   UNIQUE KEY `acc_username` (`acc_username`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `accounts`
@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 INSERT INTO `accounts` (`acc_id`, `user_id`, `acc_profile_photo`, `acc_bio`, `acc_username`, `acc_password`) VALUES
 (101, 1, NULL, NULL, 'meet', 'meet@123'),
 (102, 1, NULL, NULL, 'Meet2', 'meet@123'),
-(107, 9, '', 'Hello i am meet ', 'Meet890', 'Meet@890'),
-(109, 9, '', 'Hello i am meet ', 'Meet8890', 'Meetrn@890');
+(107, 9, '1763557153_boy.png', 'Hello i am meet ', 'Meet890', 'Meet@890'),
+(109, 9, '1763556469_images.png', 'Hello i am meet ', 'Meet8890', 'Meetrn@890'),
+(110, 12, '1763558039_images.png', 'hi i am krunal from Ahmedabad', 'krunal', 'krunal@123'),
+(111, 12, NULL, 'hi i am krunal from Ahmedabad', 'krunal123', 'krunal@123');
 
 -- --------------------------------------------------------
 
@@ -90,15 +92,23 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 DROP TABLE IF EXISTS `followers`;
 CREATE TABLE IF NOT EXISTS `followers` (
-  `foll_id` int NOT NULL AUTO_INCREMENT,
-  `acc_id` int NOT NULL,
-  `foll_followers` longtext NOT NULL,
-  `foll_following` longtext NOT NULL,
-  PRIMARY KEY (`foll_id`),
-  KEY `foll_followers` (`foll_followers`(250)),
-  KEY `foll_following` (`foll_following`(250)),
-  KEY `acc_id` (`acc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `follower_id` int NOT NULL,
+  `following_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `followers`
+--
+
+INSERT INTO `followers` (`id`, `follower_id`, `following_id`, `created_at`) VALUES
+(33, 109, 107, '2025-11-19 12:47:26'),
+(24, 107, 109, '2025-11-19 10:48:13'),
+(23, 107, 102, '2025-11-19 10:48:12'),
+(39, 107, 101, '2025-11-19 14:49:02'),
+(30, 109, 102, '2025-11-19 12:14:18');
 
 -- --------------------------------------------------------
 
@@ -115,6 +125,31 @@ CREATE TABLE IF NOT EXISTS `likes` (
   UNIQUE KEY `like_by` (`like_by`(250)) USING BTREE,
   KEY `post_id` (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE IF NOT EXISTS `messages` (
+  `msg_id` int NOT NULL AUTO_INCREMENT,
+  `sender_id` int NOT NULL,
+  `receiver_id` int NOT NULL,
+  `message_text` text NOT NULL,
+  `is_read` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`msg_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`msg_id`, `sender_id`, `receiver_id`, `message_text`, `is_read`, `created_at`) VALUES
+(1, 107, 101, 'asdas', 0, '2025-11-19 14:54:33'),
+(2, 107, 101, 'hello', 0, '2025-11-19 14:56:19');
 
 -- --------------------------------------------------------
 
@@ -152,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`post_id`),
   KEY `like_id` (`like_id`,`comment_id`),
   KEY `acc_id` (`acc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `post`
@@ -161,7 +196,10 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`post_id`, `acc_id`, `post_type`, `post_location`, `post_caption`, `like_id`, `comment_id`) VALUES
 (2, 107, 'image', 'post_691c699da33251.43570467_c076459163.jpg', 'BCA SEM-6', NULL, NULL),
 (3, 107, 'image', 'post_691c69c03a77f3.79689772_9fe5c0ba18.jpg', 'SSC', NULL, NULL),
-(4, 107, 'image', 'post_691c6a193350f1.90359808_1d3ac69781.jpg', 'HSC', NULL, NULL);
+(4, 107, 'image', 'post_691c6a193350f1.90359808_1d3ac69781.jpg', 'HSC', NULL, NULL),
+(5, 107, 'image', 'post_691c6b9d485d53.29661086_085c43e267.jpg', 'Lc', NULL, NULL),
+(6, 107, 'image', 'post_691c76bc0cb9e8.29389075_d9fc9774ac.png', 'sad', NULL, NULL),
+(7, 107, 'image', 'post_691c7fc2400431.05158758_c37522cfd0.png', 'sadasd', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `user_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `user_age` int NOT NULL,
-  `user_gender` varchar(5) NOT NULL,
+  `user_gender` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `user_ph` bigint DEFAULT NULL,
   `user_email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `user_dob` date DEFAULT NULL,
@@ -183,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   UNIQUE KEY `user_email` (`user_email`),
   UNIQUE KEY `user_ph` (`user_ph`),
   KEY `Index_user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user_details`
@@ -191,12 +229,13 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 
 INSERT INTO `user_details` (`user_id`, `user_name`, `user_age`, `user_gender`, `user_ph`, `user_email`, `user_dob`, `user_password`) VALUES
 (1, 'Meet', 24, 'Male', 7774441112, 'meetrn7890@gmail.com', '2002-11-27', 'meet@2002'),
-(2, 'Krupal', 22, 'male', 9999999989, 'krupal@gmail.com', '2004-11-27', 'krupal@123'),
-(6, 'Krupal2', 22, 'male', 9999999999, 'krupal2@gmail.com', '2004-11-27', 'krupal@123'),
-(8, 'uday', 22, 'male', 123456456, 'uday@gmail.com', '2002-11-27', 'uday@123'),
-(9, 'meet', 24, 'male', 4564564564, 'meet12@gmail.com', '2002-11-27', 'Meet@123'),
-(10, 'anjli', 23, 'femal', 1112223334, 'anjli@gmail.com', '2003-11-27', 'anjli@123'),
-(11, 'anjli2', 23, 'femal', 1112223335, 'anjli2@gmail.com', '2003-11-27', 'anjli@123');
+(2, 'Krupal', 22, 'Male', 9999999989, 'krupal@gmail.com', '2004-11-27', 'krupal@123'),
+(6, 'Krupal2', 22, 'Male', 9999999999, 'krupal2@gmail.com', '2004-11-27', 'krupal@123'),
+(8, 'uday', 22, 'Male', 123456456, 'uday@gmail.com', '2002-11-27', 'uday@123'),
+(9, 'meet', 26, 'Male', 4564564564, 'meet12@gmail.com', '2002-11-27', 'Meet@123'),
+(10, 'anjli', 23, 'Female', 1112223334, 'anjli@gmail.com', '2003-11-27', 'anjli@123'),
+(11, 'anjli2', 23, 'Female', 1112223335, 'anjli2@gmail.com', '2003-11-27', 'anjli@123'),
+(12, 'krunal', 22, 'Male', 5656565656, 'krunal@gmail.com', '2004-11-27', 'krunal@123');
 
 --
 -- Constraints for dumped tables
@@ -219,12 +258,6 @@ ALTER TABLE `block`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `followers`
---
-ALTER TABLE `followers`
-  ADD CONSTRAINT `followers_ibfk_1` FOREIGN KEY (`acc_id`) REFERENCES `accounts` (`acc_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `likes`
