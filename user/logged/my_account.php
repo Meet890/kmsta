@@ -6,8 +6,30 @@ $acc_id = $_SESSION['acc_id'] ?? 0;
 
 $sql_user = "SELECT acc_username FROM accounts WHERE acc_id = $acc_id LIMIT 1";
 $result_user = $conn->query($sql_user);
+$sql_bio = "SELECT acc_bio FROM accounts WHERE acc_id = $acc_id LIMIT 1";
+$result_bio = $conn->query($sql_bio);
 
-if ($result_user && $result_user->num_rows > 0) {
+
+$sql = "SELECT COUNT(*) AS total FROM followers WHERE following_id = $acc_id";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$followers = $row['total'];
+
+// FIND TOTAL FOLLOWING
+$sql = "SELECT COUNT(*) AS total FROM followers WHERE follower_id = $acc_id";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$following = $row['total'];
+
+// FIND TOTAL POSTS
+$sql = "SELECT COUNT(*) AS total FROM post WHERE acc_id = $acc_id";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$postsCount = $row['total'];
+
+
+
+if($result_user && $result_user->num_rows > 0){
     $user_row = $result_user->fetch_assoc();
     $username = htmlspecialchars($user_row['acc_username']);
 } else {
