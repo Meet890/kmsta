@@ -110,6 +110,15 @@ if (isset($_POST['unfollow_btn'])) {
             color: #ff004c;
         }
 
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: inherit;
+            /* or a specific color */
+            text-decoration: none;
+        }
+
         .user-grid {
             display: flex;
             flex-direction: column;
@@ -229,42 +238,43 @@ if (isset($_POST['unfollow_btn'])) {
                     $checkFollow = mysqli_query(
                         $conn,
                         "SELECT * FROM followers
-                 WHERE follower_id='$acc_id'
-                 AND following_id='{$u['acc_id']}'"
+                                WHERE follower_id='$acc_id'
+                                AND following_id='{$u['acc_id']}'"
                     );
 
                     $isFollowing = mysqli_num_rows($checkFollow) > 0;
                     ?>
+                    <a href="user_profile.php?searchUserId=<?php echo $u['acc_id'] ?>">
+                        <div class="user-card">
 
-                    <div class="user-card">
-
-                        <!-- LEFT : PROFILE -->
-                        <div class="user-content">
-                            <img src="uploads/<?php echo $u['acc_profile_photo']; ?>" class="user-img">
-                            <div class="user-info">
-                                <div class="user-name">@<?php echo $u['acc_username']; ?></div>
-                                <div class="user-username"><?php echo $u['acc_bio']; ?></div>
+                            <!-- LEFT : PROFILE -->
+                            <div class="user-content">
+                                <img src="uploads/<?php echo $u['acc_profile_photo']; ?>" class="user-img">
+                                <div class="user-info">
+                                    <div class="user-name">@<?php echo $u['acc_username']; ?></div>
+                                    <div class="user-username"><?php echo $u['acc_bio']; ?></div>
+                                </div>
                             </div>
+
+                            <!-- RIGHT : FOLLOW / UNFOLLOW -->
+                            <?php if ($isFollowing): ?>
+
+                                <form method="post">
+                                    <input type="hidden" name="follow_id" value="<?php echo $u['acc_id']; ?>">
+                                    <button name="unfollow_btn" class="following-btn">Following</button>
+                                </form>
+
+                            <?php else: ?>
+
+                                <form method="post">
+                                    <input type="hidden" name="follow_id" value="<?php echo $u['acc_id']; ?>">
+                                    <button name="follow_btn" class="follow-btn">Follow</button>
+                                </form>
+
+                            <?php endif; ?>
+
                         </div>
-
-                        <!-- RIGHT : FOLLOW / UNFOLLOW -->
-                        <?php if ($isFollowing): ?>
-
-                            <form method="post">
-                                <input type="hidden" name="follow_id" value="<?php echo $u['acc_id']; ?>">
-                                <button name="unfollow_btn" class="following-btn">Following</button>
-                            </form>
-
-                        <?php else: ?>
-
-                            <form method="post">
-                                <input type="hidden" name="follow_id" value="<?php echo $u['acc_id']; ?>">
-                                <button name="follow_btn" class="follow-btn">Follow</button>
-                            </form>
-
-                        <?php endif; ?>
-
-                    </div>
+                    </a>
 
                 <?php }
 
