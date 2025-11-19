@@ -333,7 +333,7 @@ if (isset($_POST['unfollow_btn'])) {
 
         <!-- PROFILE SECTION -->
         <div class="profile-wrapper">
-            <img src="img/user_profile.jpg" alt="Profile Picture">
+             <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
 
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
@@ -404,18 +404,7 @@ if (isset($_POST['unfollow_btn'])) {
 
     </div>
 
-    <!-- ADD POST MODAL -->
-    <div id="addPostModal">
-        <div class="modal-content">
-            <h3>Add New Post</h3>
-            <form action="upload_post.php" method="post" enctype="multipart/form-data">
-                <input type="file" name="post_file" accept=".jpg,.jpeg,.png,.mp4" required>
-                <textarea name="post_caption" placeholder="Write a caption..."></textarea>
-                <button type="submit" name="upload_post">Upload</button>
-            </form>
-            <button id="closeModal">Cancel</button>
-        </div>
-    </div>
+    
 
     <!-- VIEW POST MODAL -->
     <div id="myModal" class="modal">

@@ -12,7 +12,13 @@ $users = [];
 /* -----------------------------------------
    SEARCH USERS
 ----------------------------------------- */
-if (isset($_GET['query'])) {
+if ($_GET['query'] == "") {
+   
+    $query = mysqli_real_escape_string($conn, $_GET['query']);
+    $sql = "SELECT * FROM accounts ";
+    $users = mysqli_query($conn, $sql);
+} elseif (isset($_GET['query'])) {
+    
     $query = mysqli_real_escape_string($conn, $_GET['query']);
     $sql = "SELECT * FROM accounts
             WHERE acc_username LIKE '%$query%' 
@@ -130,7 +136,7 @@ if (isset($_POST['unfollow_btn'])) {
             align-items: center;
             background: rgba(25, 25, 25, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.08);
-             border-radius: 20px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             box-shadow: 0 0 20px rgba(255, 0, 76, 0.3);
@@ -242,8 +248,10 @@ if (isset($_POST['unfollow_btn'])) {
 
         <div class="user-grid">
             <?php
-            if ($query != "" && mysqli_num_rows($users) > 0) {
-
+            // echo "<pre>";
+            // print_r($query);
+            // echo "</pre>";
+            if ($query == "" || mysqli_num_rows($users) > 0) {
                 while ($u = mysqli_fetch_assoc($users)) {
 
                     // skip own profile
@@ -296,7 +304,9 @@ if (isset($_POST['unfollow_btn'])) {
                 <?php }
 
             } else {
+                
                 echo "<p style='color:#bbb;'>No users found.</p>";
+
             }
             ?>
         </div>
