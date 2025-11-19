@@ -254,10 +254,10 @@ hr {
         <div>
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="username"><?php echo $username; ?></div>
-                <button class="edit-btn" id="addPostBtn">Add Post</button>
             </div>
 
             <a href="edit_profile.php"><button class="edit-btn">Edit Profile</button></a>
+            <button class="edit-btn" id="addPostBtn">Add Post</button>
 
             <div class="stats">
                 <span><strong>12</strong> posts</span>
