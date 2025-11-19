@@ -1,6 +1,33 @@
 <?php
 //session_start();
 require 'conn.php';
+
+$searchUserId= $_GET["searchUserId"];
+$sql = "SELECT * FROM accounts WHERE acc_id = $searchUserId ";
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $searchUserName=$row["acc_username"];
+        $searchUserBio= $row["acc_bio"];
+        $searchUserProfile= $row["acc_profile_photo"];
+    }
+}
+//find following
+$sql = "select count(*) as total  from followers where follower_id = $searchUserId";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$following=$row["total"];
+//find followers
+$sql = "select count(*) as total  from followers where following_id = $searchUserId";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$followers=$row["total"];
+//find post
+$sql = "select count(*) as total  from post where acc_id = $searchUserId";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$postsCount=$row["total"];
+
 ?>
 
 
@@ -241,18 +268,18 @@ hr {
 
         <div>
             <div style="display:flex; align-items:center; gap:10px;">
-                <div class="username"><?php echo $_SESSION['user_username']; ?></div>
+                <div class="username"><?php echo $searchUserName; ?></div>
             </div>
 
-            <a href="edit_profile.php"><button class="edit-btn">Follow</button></a>
+            <a href=""><button class="edit-btn">Follow</button></a>
 
             <div class="stats">
-                <span><strong>12</strong> posts</span>
-                <span><strong>230</strong> followers</span>
-                <span><strong>180</strong> following</span>
+                <span><strong><?php echo $postsCount;?></strong> posts</span>
+                <span><strong><?php echo $followers;?></strong> followers</span>
+                <span><strong><?php echo $following;?></strong> following</span>
             </div>
 
-            <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
+            <p class="bio"><?php echo $_SESSION["acc_bio"];?></p>
         </div>
         
     </div>
@@ -262,8 +289,8 @@ hr {
     <!-- POSTS GRID -->
    <div class="gallery">
 <?php
-$acc_id= $_SESSION["acc_id"];
-$sql = "SELECT * FROM post WHERE acc_id = $acc_id ORDER BY post_id DESC";
+$searchUserId= $_GET["searchUserId"];
+$sql = "SELECT * FROM post WHERE acc_id = $searchUserId ORDER BY post_id DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
