@@ -24,3 +24,19 @@ Pendding
 -search persons
 -view recommended posts 
 -add message opetion *if it is possible
+
+
+
+
+
+sessions 
+Array
+(
+    [user_id] => 9
+    [user_name] => meet
+    [user_email] => meet12@gmail.com
+    [acc_id] => 107
+    [acc_username] => Meet890
+    [acc_profile_photo] => 
+    [acc_bio] => Hello i am meet 
+)
