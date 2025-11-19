@@ -28,9 +28,42 @@ $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $postsCount = $row['total'];
 
+//update profile image
+
+if (isset($_POST['Update_Image'])) {
+
+    $userId = $_SESSION['acc_id'];
+
+    // File info
+    $fileName = $_FILES['profile_photo']['name'];
+    $tmpName = $_FILES['profile_photo']['tmp_name'];
+
+    // Unique name
+    $newName = time() . "_" . $fileName;
+
+    // Move file to uploads folder
+    move_uploaded_file($tmpName, "uploads/" . $newName);
+
+    // Update DB
+    $update = mysqli_query(
+        $conn,
+        "UPDATE accounts 
+         SET acc_profile_photo='$newName' 
+         WHERE acc_id='$userId'"
+    );
+
+    // Update session so profile image updates everywhere
+    $_SESSION['acc_profile_photo'] = $newName;
+
+    // Refresh page
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit;
+}
 
 
-if($result_user && $result_user->num_rows > 0){
+//
+
+if ($result_user && $result_user->num_rows > 0) {
     $user_row = $result_user->fetch_assoc();
     $username = htmlspecialchars($user_row['acc_username']);
 } else {
@@ -290,22 +323,24 @@ if($result_user && $result_user->num_rows > 0){
 
         <!-- PROFILE SECTION -->
         <div class="profile-wrapper">
-            <img src="img/user_profile.jpg" alt="Profile Picture">
+            <img src="uploads/<?php echo ($_SESSION['acc_profile_photo'] ?? 'default2.png'); ?>">
+
+
 
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
                     <div class="username"><?php echo $username; ?></div>
                 </div>
-
+                <button class="edit-btn" id="UpdateImageBtn">Update Photo</button>
                 <a href="edit_profile.php"><button class="edit-btn">Edit Profile</button></a>
                 <button class="edit-btn" id="addPostBtn">Add Post</button>
 
                 <div class="stats">
                     <div class="stats">
-                    <span><strong><?php echo $postsCount; ?></strong> posts</span>
-                    <span><strong><?php echo $followers; ?></strong> followers</span>
-                    <span><strong><?php echo $following; ?></strong> following</span>
-            </div>
+                        <span><strong><?php echo $postsCount; ?></strong> posts</span>
+                        <span><strong><?php echo $followers; ?></strong> followers</span>
+                        <span><strong><?php echo $following; ?></strong> following</span>
+                    </div>
                 </div>
 
                 <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
@@ -344,7 +379,17 @@ if($result_user && $result_user->num_rows > 0){
         </div>
 
     </div>
-
+    <!-- update modal -->
+    <div id="UpdateImageModal" style="display:none;">
+        <div class="modal-content">
+            <h3>Update Image</h3>
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" name="profile_photo" accept=".jpg,.jpeg,.png" required>
+                <button type="submit" name="Update_Image">Upload</button>
+            </form>
+            <button id="closeModal">Cancel</button>
+        </div>
+    </div>
     <!-- ADD POST MODAL -->
     <div id="addPostModal">
         <div class="modal-content">
@@ -363,6 +408,25 @@ if($result_user && $result_user->num_rows > 0){
         <img id="modalImg" class="modal-content" style="display:none;">
         <video id="modalVideo" class="modal-content" controls style="display:none; max-height:90vh;"></video>
     </div>
+    <script>
+        const openBtn = document.getElementById('UpdateImageBtn');
+        const modal = document.getElementById('UpdateImageModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
 
     <script>
         // ===== ADD POST MODAL =====

@@ -333,7 +333,7 @@ if (isset($_POST['unfollow_btn'])) {
 
         <!-- PROFILE SECTION -->
         <div class="profile-wrapper">
-            <img src="img/user_profile.jpg" alt="Profile Picture">
+             <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
 
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">

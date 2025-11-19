@@ -25,6 +25,9 @@ Pendding
 -view recommended posts 
 -add message opetion *if it is possible
 
+*****
+-in user_profile.php post is not open in full screen
+
 
 
 
