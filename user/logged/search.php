@@ -265,7 +265,8 @@ if (isset($_POST['unfollow_btn'])) {
 
                             <!-- LEFT : PROFILE -->
                             <div class="user-content">
-                                <img src="uploads/<?php echo $u['acc_profile_photo']; ?>" class="user-img">
+                                <!-- <img src="uploads/<?php echo $u['acc_profile_photo']; ?>" class="user-img"> -->
+                                <img src="uploads/<?php echo ($u['acc_profile_photo'] ?? 'default2.png'); ?>" class="user-img">
                                 <div class="user-info">
                                     <div class="user-name">@<?php echo $u['acc_username']; ?></div>
                                     <div class="user-username"><?php echo $u['acc_bio']; ?></div>
