@@ -1,19 +1,26 @@
 <?php
-// session_start(); 
+//session_start(); 
 require_once "conn.php";
 
 $acc_id = $_SESSION['acc_id'] ?? 0; 
-
 $sql_user = "SELECT acc_username FROM accounts WHERE acc_id = $acc_id LIMIT 1";
 $result_user = $conn->query($sql_user);
-
+$sql_bio = "SELECT acc_bio FROM accounts WHERE acc_id = $acc_id LIMIT 1";
+$result_bio = $conn->query($sql_bio);
 if($result_user && $result_user->num_rows > 0){
     $user_row = $result_user->fetch_assoc();
     $username = htmlspecialchars($user_row['acc_username']); 
 } else {
     $username = "Unknown User";
 }
+if($result_bio && $result_bio->num_rows > 0){  
+    $bio_row = $result_bio->fetch_assoc();
+    $acc_bio = htmlspecialchars($bio_row['acc_bio']);  
+} else {
+    $acc_bio = "BIO>>>>>";  
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -265,7 +272,7 @@ hr {
                 <span><strong>180</strong> following</span>
             </div>
 
-            <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
+            <div class="username"><?php echo "<p>".$acc_bio."</p>"; ?></div>
         </div>
         
     </div>
