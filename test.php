@@ -13,16 +13,16 @@ Day-1
 -build actractive UI with online AI reference
 
 
-Day-2
+-update database and make relationship
 -search persons
 -show other persons
 -follow other persons
 -view other persons posts 
--dynamic followers,following,posts in profile page
--dynamic followers,following,posts in user_profile page
--show profile photo in login,home,profile pages
--add message opetion
-
+-dynamic followers, following, posts in profile page
+-dynamic followers, following, posts in user_profile page
+-show profile photo in login ,home, profile pages
+-add message option
+-make dynamic messages send and read by receiver
 
 Pendding
 -Admin panel
