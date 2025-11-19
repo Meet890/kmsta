@@ -73,7 +73,7 @@ body {
     font-size: 28px;
     font-weight: 700;
     background: linear-gradient(45deg, #ff004c, #ffae00);
-    /* -webkit-background-clip: text; */
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 6px;
 }
