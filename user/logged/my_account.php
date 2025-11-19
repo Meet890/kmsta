@@ -1,3 +1,21 @@
+<?php
+// session_start(); 
+require_once "conn.php";
+
+$acc_id = $_SESSION['acc_id'] ?? 0; 
+
+$sql_user = "SELECT acc_username FROM accounts WHERE acc_id = $acc_id LIMIT 1";
+$result_user = $conn->query($sql_user);
+
+if($result_user && $result_user->num_rows > 0){
+    $user_row = $result_user->fetch_assoc();
+    $username = htmlspecialchars($user_row['acc_username']); 
+} else {
+    $username = "Unknown User";
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +73,7 @@ body {
     font-size: 28px;
     font-weight: 700;
     background: linear-gradient(45deg, #ff004c, #ffae00);
-    -webkit-background-clip: text;
+    /* -webkit-background-clip: text; */
     -webkit-text-fill-color: transparent;
     margin-bottom: 6px;
 }
@@ -235,7 +253,7 @@ hr {
 
         <div>
             <div style="display:flex; align-items:center; gap:10px;">
-                <div class="username">my_username</div>
+                <div class="username"><?php echo $username; ?></div>
                 <button class="edit-btn" id="addPostBtn">Add Post</button>
             </div>
 
