@@ -10,43 +10,45 @@
     <!-- Search Bar (desktop only) -->
     <form class="nav-search">
       <input type="text" placeholder="Search">
+      <button type="submit" class="search-btn">
+        <i class="bi bi-search"></i>
+      </button>
     </form>
 
     <!-- Right Icons -->
     <div class="nav-icons" style="position: relative; display: flex; align-items: center; gap: 20px;">
 
-  <a href="home.php"><i class="bi bi-house-door fs-4"></i></a>
-  <a href="search.php"><i class="bi bi-search fs-4"></i></a>
-  <a href="messages.php"><i class="bi bi-chat-dots fs-4"></i></a>
+      <a href="home.php"><i class="bi bi-house-door fs-4"></i></a>
+      <a href="search.php"><i class="bi bi-search fs-4"></i></a>
+      <a href="messages.php"><i class="bi bi-chat-dots fs-4"></i></a>
 
-  <!-- Profile Dropdown -->
-  <div class="profile-dropdown" style="position: relative;">
-    <a href="my_account.php" id="profileBtn"><i class="bi bi-person-circle fs-4"></i></a>
+      <!-- Profile Dropdown -->
+      <div class="profile-dropdown" style="position: relative;">
+        <a href="my_account.php" id="profileBtn"><i class="bi bi-person-circle fs-4"></i></a>
 
-    <ul id="dropdownMenu" style="
-        display: none;
-        position: absolute;
-        top: 40px;
-        right: 0;
-        background: #1a1a1a;
-        border: 1px solid #333;
-        border-radius: 8px;
-        font-size:10px;
-        list-style: none;
-        padding: 8px 0;
-        min-width: 180px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        z-index: 100;
-        
-    ">
-      <li><a href="my_account.php" style=" font-size: 15px; display:block; padding: 10px 15px; color: white; text-decoration: none;">View Profile</a></li>
-      <li><a href="edit_profile.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Edit Personal Details</a></li>
-      <li><hr style="margin: 4px 0; border-color: #444;"></li>
-      <li><a href="../logout.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Logout</a></li>
-    </ul>
-  </div>
+        <ul id="dropdownMenu" style="
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size:10px;
+            list-style: none;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 100;
+        ">
+          <li><a href="my_account.php" style=" font-size: 15px; display:block; padding: 10px 15px; color: white; text-decoration: none;">View Profile</a></li>
+          <li><a href="edit_profile.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Edit Personal Details</a></li>
+          <li><hr style="margin: 4px 0; border-color: #444;"></li>
+          <li><a href="../logout.php" style="font-size: 15px;display:block; padding: 10px 15px; color: white; text-decoration: none;">Logout</a></li>
+        </ul>
+      </div>
 
-</div>
+    </div>
 
   </div>
 </nav>
@@ -77,6 +79,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap; /* prevents breaking when zooming */
 }
 
 /* -------- LOGO -------- */
@@ -92,12 +95,14 @@
 
 /* -------- SEARCH BAR -------- */
 .nav-search {
+  position: relative;
   display: none;
+  flex-shrink: 0; /* prevents disappearing on zoom */
 }
 
 .nav-search input {
   width: 260px;
-  padding: 7px 12px;
+  padding: 7px 38px 7px 12px;
   border-radius: 10px;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
@@ -107,6 +112,26 @@
 
 .nav-search input::placeholder {
   color: #bbb;
+}
+
+.search-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.25s;
+}
+
+.search-btn:hover {
+  background: rgba(255,255,255,0.18);
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c;
 }
 
 /* Desktop search */
@@ -133,14 +158,16 @@
 
 <!-- Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 <script>
 // Dropdown toggle
 const profileBtn = document.getElementById('profileBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
 profileBtn.addEventListener('click', function(e) {
-    e.preventDefault(); // prevent default link behavior
-    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    e.preventDefault();
+    dropdownMenu.style.display =
+      dropdownMenu.style.display === 'block' ? 'none' : 'block';
 });
 
 // Close dropdown when clicking outside
