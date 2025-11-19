@@ -187,32 +187,6 @@ body {
 include"navbar.php";
 ?>
 <!-- NAVBAR -->
-<<<<<<< Updated upstream
-<nav class="navbar-custom">
-  <div class="nav-title">KMSTA</div>
-
-  <form class="nav-search" style="position:relative;" action="search.php" method="GET">
-    <input type="text" name="query" placeholder="Search users" value="<?php echo htmlspecialchars($query); ?>">
-    <button type="submit"><i data-lucide="search"></i></button>
-  </form>
-
-  <div class="nav-icons">
-    <a href="home.php"><i data-lucide="home" class="nav-icon"></i></a>
-    <a href="messages.php"><i data-lucide="message-square" class="nav-icon"></i></a>
-
-    <div class="profile-dropdown" style="position:relative;">
-      <a href="#" id="profileBtn"><i data-lucide="user" class="nav-icon"></i></a>
-      <ul id="dropdownMenu">
-        <li><a href="my_account.php">View Profile</a></li>
-        <li><a href="edit_profile.php">Edit Personal Details</a></li>
-        <li><hr style="margin:4px 0;border-color:#444;"></li>
-        <li><a href="../logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-=======
->>>>>>> Stashed changes
 
 <!-- SEARCH RESULTS -->
 <div class="search-box">
