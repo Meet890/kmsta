@@ -8,8 +8,8 @@
     </div>
 
     <!-- Search Bar (desktop only) -->
-    <form class="nav-search">
-      <input type="text" placeholder="Search">
+    <form class="nav-search"action="search.php" method="get">
+      <input type="text" name="query" placeholder="Search">
       <button type="submit" class="search-btn">
         <i class="bi bi-search"></i>
       </button>
