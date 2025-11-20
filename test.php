@@ -24,18 +24,24 @@ Day-2
 -add message option
 -make dynamic messages send and read by receiver
 
+Day-3
+-all page check session session for redirect
+-see there posts ,
+
+pending like it , comment it
+-my_account upload profile photo is not working  
+-my_account inside add post cancle button is not working 
+
+
+
 Pendding
 -Admin panel
--all page check session session for redirect
 -delete own post
--see there posts , like it , comment it
 -add story's
 -view other persons story's
 
 *****errors*****
 -in user_profile.php post is not open in full screen
--my_account upload profile photo is not working  
--my_account inside add post cancle button is not working 
 
 
 
@@ -65,11 +71,11 @@ Array
 <?php
 
 
-$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-$host = $_SERVER['HTTP_HOST'];
-$request_uri = $_SERVER['REQUEST_URI'];
+// $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+// $host = $_SERVER['HTTP_HOST'];
+// $request_uri = $_SERVER['REQUEST_URI'];
 
-$full_url =  $request_uri;
+// $full_url =  $request_uri;
 
-echo $full_url;
+// echo $full_url;
 ?>
