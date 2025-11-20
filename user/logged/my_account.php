@@ -310,6 +310,44 @@ if ($result_user && $result_user->num_rows > 0) {
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ====== POST ACTION BUTTONS (NEW) ====== */
+
+.post-box {
+    position: relative;
+}
+
+.post-actions {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+
+.post-box:hover .post-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 10px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 18px;
+}
+
+.action-btn:hover {
+    background: rgba(255,0,76,0.7);
+    transform: scale(1.25);
+}
+
     </style>
 
 </head>
@@ -364,13 +402,27 @@ if ($result_user && $result_user->num_rows > 0) {
                     $file_type = $row['post_type'];  // image or video
                     $file_path = "uploads/" . $post_file;
 
-                    if ($file_type == "image") {
-                        echo '<img src="' . $file_path . '" alt="post-image" class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'image\')">';
-                    }
+echo '<div class="post-box">';
 
-                    if ($file_type == "video") {
-                        echo '<video class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'video\')"><source src="' . $file_path . '" type="video/mp4"></video>';
-                    }
+if ($file_type == "image") {
+    echo '<img src="' . $file_path . '" class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'image\')">';
+}
+
+if ($file_type == "video") {
+    echo '<video class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'video\')">
+            <source src="' . $file_path . '" type="video/mp4">
+          </video>';
+}
+
+// === POST UI BUTTONS ===
+echo '
+    <div class="post-actions">
+        <button class="action-btn like-btn"><i class="bi bi-heart"></i></button>
+        <button class="action-btn comment-btn"><i class="bi bi-chat"></i></button>
+        <button class="action-btn delete-btn" data-id="' . $row['post_id'] . '"><i class="bi bi-trash"></i></button>
+    </div>
+</div>';
+
                 }
             } else {
                 echo "<p>No posts.</p>";
@@ -408,6 +460,16 @@ if ($result_user && $result_user->num_rows > 0) {
         <img id="modalImg" class="modal-content" style="display:none;">
         <video id="modalVideo" class="modal-content" controls style="display:none; max-height:90vh;"></video>
     </div>
+    <div id="deleteModal" class="modal" style="display:none; justify-content:center; align-items:center;">
+    <div class="modal-content" style="background:#222; padding:20px; border-radius:12px; width:300px; text-align:center;">
+        <h3 style="color:#ff004c; margin-bottom:10px;">Delete Post?</h3>
+        <p style="color:#ccc;">This action is UI only and does nothing.</p>
+
+        <button class="edit-btn" id="confirmDelete">Yes, Delete</button>
+        <button class="edit-btn" id="cancelDelete" style="margin-top:10px;">Cancel</button>
+    </div>
+</div>
+
     <script>
         const openBtn = document.getElementById('UpdateImageBtn');
         const modal = document.getElementById('UpdateImageModal');
@@ -481,6 +543,37 @@ if ($result_user && $result_user->num_rows > 0) {
             modalVideo.pause();
             modalVideo.src = "";
         }
+
+        // ===== UI DELETE ONLY =====
+let deleteModal = document.getElementById("deleteModal");
+let deletePostID = null;
+
+// open delete confirmation
+document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        deletePostID = btn.dataset.id;
+        deleteModal.style.display = "flex";
+    });
+});
+
+// cancel
+document.getElementById("cancelDelete").onclick = () => {
+    deleteModal.style.display = "none";
+};
+
+// UI only confirm
+document.getElementById("confirmDelete").onclick = () => {
+    alert("UI ONLY: Post ID " + deletePostID + " would be deleted.");
+    deleteModal.style.display = "none";
+};
+
+// close modal on outside click
+window.onclick = function(e) {
+    if (e.target === deleteModal) {
+        deleteModal.style.display = "none";
+    }
+};
+
     </script>
 
 </body>

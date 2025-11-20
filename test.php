@@ -51,3 +51,10 @@ Array
     [acc_profile_photo] => 
     [acc_bio] => Hello i am meet 
 )
+
+
+for add comments
+  <div class="comment-section">
+    <input type="text" placeholder="Add a comment..." data-postid="<?= $post['post_id'] ?>">
+    <button type="submit" name="submit" id="submit">submit</button>
+  </div>

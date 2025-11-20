@@ -1,8 +1,11 @@
 <?php
 //session_start();
 require 'conn.php';
+
 $acc_id = $_SESSION['acc_id'];
 $searchUserId = $_GET["searchUserId"];
+
+// Fetch user info
 $sql = "SELECT * FROM accounts WHERE acc_id = $searchUserId ";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -12,43 +15,36 @@ if ($result->num_rows > 0) {
         $searchUserProfile = $row["acc_profile_photo"];
     }
 }
-//find following
-$sql = "select count(*) as total  from followers where follower_id = $searchUserId";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-$following = $row["total"];
-//find followers
-$sql = "select count(*) as total  from followers where following_id = $searchUserId";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-$followers = $row["total"];
-//find post
-$sql = "select count(*) as total  from post where acc_id = $searchUserId";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-$postsCount = $row["total"];
 
+// Following count
+$sql = "SELECT COUNT(*) AS total FROM followers WHERE follower_id = $searchUserId";
+$result = $conn->query($sql);
+$following = $result->fetch_assoc()["total"];
 
-//follow and unfollow
+// Followers count
+$sql = "SELECT COUNT(*) AS total FROM followers WHERE following_id = $searchUserId";
+$result = $conn->query($sql);
+$followers = $result->fetch_assoc()["total"];
+
+// Post count
+$sql = "SELECT COUNT(*) AS total FROM post WHERE acc_id = $searchUserId";
+$result = $conn->query($sql);
+$postsCount = $result->fetch_assoc()["total"];
+
+// Follow
 if (isset($_POST['follow_btn'])) {
-
-    $follower = $acc_id;               // logged in user
-    $following = $_POST['follow_id'];  // target user
+    $follower = $acc_id;
+    $following = $_POST['follow_id'];
 
     if ($follower != $following) {
-
-        // Check follow status
-        $chk = mysqli_query(
-            $conn,
+        $chk = mysqli_query($conn,
             "SELECT * FROM followers 
              WHERE follower_id='$follower' 
              AND following_id='$following'"
         );
 
         if (mysqli_num_rows($chk) == 0) {
-            // FOLLOW
-            mysqli_query(
-                $conn,
+            mysqli_query($conn,
                 "INSERT INTO followers (follower_id, following_id)
                  VALUES ('$follower', '$following')"
             );
@@ -59,15 +55,12 @@ if (isset($_POST['follow_btn'])) {
     exit;
 }
 
-
-// UNFOLLOW
+// Unfollow
 if (isset($_POST['unfollow_btn'])) {
-
     $follower = $acc_id;
     $following = $_POST['follow_id'];
 
-    mysqli_query(
-        $conn,
+    mysqli_query($conn,
         "DELETE FROM followers 
          WHERE follower_id='$follower' 
          AND following_id='$following'"
@@ -76,11 +69,7 @@ if (isset($_POST['unfollow_btn'])) {
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit;
 }
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,12 +82,7 @@ if (isset($_POST['unfollow_btn'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-    <?php
-    require_once "conn.php";
-    ?>
-
     <style>
-        /* BODY & FONT */
         body {
             margin: 0;
             padding: 0;
@@ -107,14 +91,12 @@ if (isset($_POST['unfollow_btn'])) {
             color: white;
         }
 
-        /* CONTAINER */
         .container-box {
             padding: 25px;
             max-width: 900px;
             margin: auto;
         }
 
-        /* PROFILE SECTION */
         .profile-wrapper {
             display: flex;
             align-items: center;
@@ -159,11 +141,9 @@ if (isset($_POST['unfollow_btn'])) {
 
         .edit-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 12px #ff004c88;
             transform: scale(1.05);
         }
 
-        /* STATS */
         .stats {
             margin-top: 15px;
             font-size: 15px;
@@ -173,24 +153,26 @@ if (isset($_POST['unfollow_btn'])) {
             margin-right: 20px;
         }
 
-        /* BIO */
         .bio {
             margin-top: 10px;
             font-size: 14px;
             color: #ccc;
         }
 
-        /* DIVIDER */
         hr {
             border-color: #333;
             margin: 30px 0;
         }
 
-        /* GALLERY GRID */
+        /* POSTS GRID */
         .gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+        }
+
+        .post-box {
+            position: relative;
         }
 
         .gallery img,
@@ -210,64 +192,42 @@ if (isset($_POST['unfollow_btn'])) {
             box-shadow: 0 0 15px #ff004caa;
         }
 
-        /* ADD POST MODAL */
-        #addPostModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 200;
+        .post-actions {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            opacity: 0;
+            transition: 0.3s;
         }
 
-        #addPostModal .modal-content {
-            background: #1a1a1a;
-            padding: 25px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 20px #ff004caa;
+        .post-box:hover .post-actions {
+            opacity: 1;
         }
 
-        #addPostModal h3 {
-            margin-bottom: 15px;
-            text-align: center;
-            color: #ff004c;
-        }
-
-        #addPostModal input,
-        #addPostModal textarea {
-            width: 100%;
+        .action-btn {
+            background: rgba(0, 0, 0, 0.6);
             padding: 8px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #111;
-            color: white;
-        }
-
-        #addPostModal button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
+            color: white;
+            font-size: 18px;
+            transition: 0.25s;
         }
 
-        #addPostModal button[type="submit"] {
-            background: linear-gradient(45deg, #ff004c, #ffae00);
-            color: white;
+        .action-btn:hover {
+            transform: scale(1.25);
+            background: rgba(255, 0, 76, 0.7);
         }
 
-        #addPostModal button#closeModal {
-            background: #333;
-            color: white;
-            margin-top: 10px;
+        .post-caption {
+            margin-top: 5px;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
         }
 
         /* VIEW POST MODAL */
@@ -279,37 +239,34 @@ if (isset($_POST['unfollow_btn'])) {
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
         .modal-content {
             max-width: 90%;
-            max-height: 90%;
-            margin: auto;
+            max-height: 70%;
             border-radius: 15px;
             box-shadow: 0 0 20px #ff004caa;
         }
 
-        /* RESPONSIVE */
+        .modal-caption {
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
         @media screen and (max-width: 768px) {
-            .profile-wrapper {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .profile-wrapper img {
-                margin-bottom: 15px;
-            }
-
-            .stats {
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-            }
-
             .gallery {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -321,160 +278,145 @@ if (isset($_POST['unfollow_btn'])) {
             }
         }
     </style>
-
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <?php include "navbar.php"; ?>
+<?php include "navbar.php"; ?>
 
-    <div class="container-box">
+<div class="container-box">
 
-        <!-- PROFILE SECTION -->
-        <div class="profile-wrapper">
-            <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
+    <!-- PROFILE -->
+    <div class="profile-wrapper">
+        <img src="uploads/<?php echo ($searchUserProfile ?? 'default2.png'); ?>">
 
-            <div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div class="username"><?php echo $searchUserName; ?></div>
-                </div>
+        <div>
+            <div class="username"><?php echo $searchUserName; ?></div>
 
-                <form action="#" method="post">
-                    <input type="hidden" name="follow_id" value="<?php echo $searchUserId; ?>">
+            <form method="post">
+                <input type="hidden" name="follow_id" value="<?php echo $searchUserId; ?>">
 
-                    <?php
-                    // Check follow status
-                    $isFollowQuery = mysqli_query(
-                        $conn,
-                        "SELECT * FROM followers 
-                        WHERE follower_id='$acc_id' 
-                        AND following_id='$searchUserId'"
-                    );
-                    $isFollowing = mysqli_num_rows($isFollowQuery) > 0;
-                    ?>
+                <?php
+                $isFollowQuery = mysqli_query(
+                    $conn,
+                    "SELECT * FROM followers 
+                     WHERE follower_id='$acc_id' 
+                     AND following_id='$searchUserId'"
+                );
+                $isFollowing = mysqli_num_rows($isFollowQuery) > 0;
+                ?>
 
-                    <?php if ($isFollowing): ?>
-                        <button class="edit-btn" name="unfollow_btn" style="background:#444;">Following</button>
-
-
-                    <?php else: ?>
-                        <button class="edit-btn" name="follow_btn" style="background:#0095f6;">Follow</button>
-                    <?php endif; ?>
-                </form>
                 <?php if ($isFollowing): ?>
-                    <form action="chat.php" method="GET">
-                        <input type="hidden" name="user" value="<?php echo $searchUserId; ?>">
-                        <button class="edit-btn" type="submit" name="submit_msg" style="background:#444;">Chat</button>
-                    </form>
+                    <button class="edit-btn" name="unfollow_btn" style="background:#444;">Following</button>
+                <?php else: ?>
+                    <button class="edit-btn" name="follow_btn" style="background:#0095f6;">Follow</button>
                 <?php endif; ?>
+            </form>
 
-                <div class="stats">
-                    <span><strong><?php echo $postsCount; ?></strong> posts</span>
-                    <span><strong><?php echo $followers; ?></strong> followers</span>
-                    <span><strong><?php echo $following; ?></strong> following</span>
-                </div>
+            <?php if ($isFollowing): ?>
+                <form action="chat.php" method="GET">
+                    <input type="hidden" name="user" value="<?php echo $searchUserId; ?>">
+                    <button class="edit-btn" style="background:#444;">Chat</button>
+                </form>
+            <?php endif; ?>
 
-                <p class="bio"><?php echo $searchUserBio; ?></p>
+            <div class="stats">
+                <span><strong><?php echo $postsCount; ?></strong> posts</span>
+                <span><strong><?php echo $followers; ?></strong> followers</span>
+                <span><strong><?php echo $following; ?></strong> following</span>
             </div>
 
+            <p class="bio"><?php echo $searchUserBio; ?></p>
         </div>
+    </div>
 
-        <hr>
+    <hr>
 
-        <!-- POSTS GRID -->
-        <div class="gallery">
-            <?php
-            $searchUserId = $_GET["searchUserId"];
-            $sql = "SELECT * FROM post WHERE acc_id = $searchUserId ORDER BY post_id DESC";
-            $result = $conn->query($sql);
+    <!-- POSTS GRID -->
+    <div class="gallery">
+        <?php
+        $sql = "SELECT * FROM post WHERE acc_id = $searchUserId ORDER BY post_id DESC";
+        $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
 
-                    $post_file = $row['post_location'];
-                    $file_type = $row['post_type'];  // image or video
-                    $file_path = "uploads/" . $post_file;
+                $post_file = $row['post_location'];
+                $file_type = $row['post_type'];
+                $caption = $row['caption'] ?? '';
+                $file_path = "uploads/" . $post_file;
 
-                    if ($file_type == "image") {
-                        echo '<img src="' . $file_path . '" alt="post-image" class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'image\')">';
-                    }
+                echo '<div class="post-box">';
 
-                    if ($file_type == "video") {
-                        echo '<video class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'video\')"><source src="' . $file_path . '" type="video/mp4"></video>';
-                    }
+                if ($file_type == "image") {
+                    echo '<img src="' . $file_path . '" onclick="openModal(\'' . $file_path . '\', \'image\', \'' . addslashes($caption) . '\')">';
                 }
-            } else {
-                echo "<p>No posts.</p>";
-            }
-            ?>
-        </div>
 
+                if ($file_type == "video") {
+                    echo '<video onclick="openModal(\'' . $file_path . '\', \'video\', \'' . addslashes($caption) . '\')">
+                            <source src="' . $file_path . '" type="video/mp4">
+                          </video>';
+                }
+
+                echo '
+                    <div class="post-actions">
+                        <button class="action-btn like-btn"><i class="bi bi-heart"></i></button>
+                        <button class="action-btn comment-btn"><i class="bi bi-chat"></i></button>
+                    </div>
+                    <div class="post-caption">' . htmlspecialchars($caption) . '</div>
+                </div>';
+            }
+        } else {
+            echo "<p>No posts.</p>";
+        }
+        ?>
     </div>
 
+</div>
 
-
-    <!-- VIEW POST MODAL -->
-    <div id="myModal" class="modal">
-        <img id="modalImg" class="modal-content" style="display:none;">
-        <video id="modalVideo" class="modal-content" controls style="display:none; max-height:90vh;"></video>
+<!-- VIEW POST MODAL -->
+<div id="postModal" class="modal">
+    <img id="modalImg" class="modal-content" style="display:none;">
+    <video id="modalVideo" class="modal-content" controls style="display:none;"></video>
+    <div class="modal-caption"></div>
+    <div class="modal-actions">
+        <button class="action-btn like-btn"><i class="bi bi-heart"></i></button>
+        <button class="action-btn comment-btn"><i class="bi bi-chat"></i></button>
     </div>
+</div>
 
-    <script>
-        // ===== ADD POST MODAL =====
-        const addPostBtn = document.getElementById('addPostBtn');
-        const addPostModal = document.getElementById('addPostModal');
-        const closeAddModalBtn = document.getElementById('closeModal');
+<script>
+function openModal(fileSrc, type, caption) {
+    const modal = document.getElementById("postModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalVideo = document.getElementById("modalVideo");
+    const modalCaption = modal.querySelector(".modal-caption");
 
-        addPostBtn.addEventListener('click', () => {
-            addPostModal.style.display = 'flex';
-        });
+    modal.style.display = "flex";
+    modalCaption.textContent = caption;
 
-        closeAddModalBtn.addEventListener('click', () => {
-            addPostModal.style.display = 'none';
-        });
+    if (type === "image") {
+        modalImg.src = fileSrc;
+        modalImg.style.display = "block";
+        modalVideo.style.display = "none";
+    } else {
+        modalVideo.src = fileSrc;
+        modalVideo.style.display = "block";
+        modalImg.style.display = "none";
+        modalVideo.play();
+    }
+}
 
-        window.addEventListener('click', (e) => {
-            if (e.target === addPostModal) {
-                addPostModal.style.display = 'none';
-            }
-        });
-
-        // ===== VIEW POST MODAL =====
-        const viewModal = document.getElementById("myModal");
-        const modalImg = document.getElementById("modalImg");
-        const modalVideo = document.getElementById("modalVideo");
-
-        function openModal(fileSrc, type) {
-            viewModal.style.display = "flex";
-
-            if (type === "image") {
-                modalImg.src = fileSrc;
-                modalImg.style.display = "block";
-                modalVideo.style.display = "none";
-            } else if (type === "video") {
-                modalVideo.src = fileSrc;
-                modalVideo.style.display = "block";
-                modalImg.style.display = "none";
-                modalVideo.load();
-                modalVideo.play();
-            }
-        }
-
-        viewModal.addEventListener("click", function (e) {
-            if (e.target === viewModal) {
-                closeViewModal();
-            }
-        });
-
-        function closeViewModal() {
-            viewModal.style.display = "none";
-            modalImg.src = "";
-            modalVideo.pause();
-            modalVideo.src = "";
-        }
-    </script>
+document.getElementById("postModal").addEventListener("click", function(e) {
+    if (e.target === this) {
+        this.style.display = "none";
+        document.getElementById("modalImg").src = "";
+        document.getElementById("modalVideo").pause();
+        document.getElementById("modalVideo").src = "";
+        this.querySelector(".modal-caption").textContent = "";
+    }
+});
+</script>
 
 </body>
-
 </html>
