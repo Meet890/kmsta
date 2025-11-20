@@ -65,7 +65,10 @@ if (isset($_POST['Update_Image'])) {
 
 if ($result_user && $result_user->num_rows > 0) {
     $user_row = $result_user->fetch_assoc();
-    $username = htmlspecialchars($user_row['acc_username']);
+    $acc_username = htmlspecialchars($user_row['acc_username']);
+    // echo '<pre>';
+    // var_dump($user_row);
+    // echo '</pre>';
 } else {
     $username = "Unknown User";
 }
@@ -367,7 +370,7 @@ if ($result_user && $result_user->num_rows > 0) {
 
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <div class="username"><?php echo $username; ?></div>
+                    <div class="username"><?php echo $acc_username; ?></div>
                 </div>
                 <button class="edit-btn" id="UpdateImageBtn">Update Photo</button>
                 <a href="edit_profile.php"><button class="edit-btn">Edit Profile</button></a>
