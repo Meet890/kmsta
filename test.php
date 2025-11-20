@@ -1,4 +1,4 @@
-Dummy Instagram (new mini project)
+<!-- Dummy Instagram (new mini project)
 Day-1
 -signup user
 -login user
@@ -12,7 +12,7 @@ Day-1
 -edit profile details & private details
 -build actractive UI with online AI reference
 
-
+Day-2 
 -update database and make relationship
 -search persons
 -show other persons
@@ -50,4 +50,18 @@ Array
     [acc_username] => Meet890
     [acc_profile_photo] => 
     [acc_bio] => Hello i am meet 
-)
+) -->
+
+
+
+<?php
+
+
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$request_uri = $_SERVER['REQUEST_URI'];
+
+$full_url =  $request_uri;
+
+echo $full_url;
+?>

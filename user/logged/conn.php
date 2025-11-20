@@ -13,4 +13,5 @@ else{
 }
 
 require_once 'session.php';
+require 'check_sessions.php';
 ?>

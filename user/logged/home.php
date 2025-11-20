@@ -1,6 +1,6 @@
 <?php
 // session_start();
-require '../conn.php';
+require 'conn.php';
 // echo $_SESSION['acc_id'];
 //  echo '<pre>';
 //     var_dump($_SESSION);

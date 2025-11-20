@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+require "conn.php";
+
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
