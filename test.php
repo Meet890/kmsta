@@ -24,26 +24,28 @@ Day-2
 -add message option
 -make dynamic messages send and read by receiver
 
-Day-3
+Day-3 Dummy Instagram (new mini project)
 -all page check session session for redirect
 -recive all messages and send reply message
 -see there posts 
+-like posts
+-comment posts
+-delete post comments
+-my_account upload profile photo is not working  ...solved
+-my_account inside add post cancle button is not working ...solved
+-in user_profile.php post is not open in full screen  ...solved
+-delete own posts
 
-pending 
--like it , comment it
--my_account upload profile photo is not working  
--my_account inside add post cancle button is not working 
+
 
 
 
 Pendding
 -Admin panel
--delete own post
 -add story's
 -view other persons story's
 
 *****errors*****
--in user_profile.php post is not open in full screen
 
 
 
