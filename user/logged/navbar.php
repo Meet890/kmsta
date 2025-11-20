@@ -1,3 +1,8 @@
+<?php
+require "conn.php";
+
+?>
+
 <!-- navbar.html -->
 <nav class="nav-glass">
   <div class="nav-inner">

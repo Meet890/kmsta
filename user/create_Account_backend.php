@@ -1,6 +1,8 @@
 <?php
 require 'conn.php';
-
+echo '<pre>';
+   var_dump($_SESSION);
+   echo '</pre>';
 if (isset($_POST['acc_submit'])) {
     $acc_username = $_POST['acc_username'];
     $acc_password = $_POST['acc_password'];

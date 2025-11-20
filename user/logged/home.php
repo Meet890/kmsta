@@ -1,7 +1,10 @@
 <?php
-//session_start();
-require '../conn.php';
-$user_id = $_SESSION['acc_id']; // current user
+// session_start();
+require 'conn.php';
+// echo $_SESSION['acc_id'];
+//  echo '<pre>';
+//     var_dump($_SESSION);
+//     echo '</pre>';
 ?>
 
 <!DOCTYPE html>
