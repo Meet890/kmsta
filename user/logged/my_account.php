@@ -316,41 +316,40 @@ if ($result_user && $result_user->num_rows > 0) {
 
         /* ====== POST ACTION BUTTONS (NEW) ====== */
 
-.post-box {
-    position: relative;
-}
+        .post-box {
+            position: relative;
+        }
 
-.post-actions {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    opacity: 0;
-    transition: 0.3s ease-in-out;
-}
+        .post-actions {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
 
-.post-box:hover .post-actions {
-    opacity: 1;
-}
+        .post-box:hover .post-actions {
+            opacity: 1;
+        }
 
-.action-btn {
-    background: rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 8px 10px;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    transition: 0.25s;
-    font-size: 18px;
-}
+        .action-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 10px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: 0.25s;
+            font-size: 18px;
+        }
 
-.action-btn:hover {
-    background: rgba(255,0,76,0.7);
-    transform: scale(1.25);
-}
-
+        .action-btn:hover {
+            background: rgba(255, 0, 76, 0.7);
+            transform: scale(1.25);
+        }
     </style>
 
 </head>
@@ -378,10 +377,10 @@ if ($result_user && $result_user->num_rows > 0) {
 
                 <div class="stats">
                     <div class="stats">
-                    <span><strong><?php echo $postsCount; ?></strong> posts</span>
-                    <span><strong><?php echo $followers; ?></strong> followers</span>
-                    <span><strong><?php echo $following; ?></strong> following</span>
-        </div>
+                        <span><strong><?php echo $postsCount; ?></strong> posts</span>
+                        <span><strong><?php echo $followers; ?></strong> followers</span>
+                        <span><strong><?php echo $following; ?></strong> following</span>
+                    </div>
                 </div>
 
                 <p class="bio">This is my bio. Add something creative or catchy about yourself!</p>
@@ -405,23 +404,21 @@ if ($result_user && $result_user->num_rows > 0) {
                     $file_type = $row['post_type'];  // image or video
                     $file_path = "uploads/" . $post_file;
 
-echo '<div class="post-box">';
+                    echo '<div class="post-box">';
 
-if ($file_type == "image") {
-    echo '<img src="' . $file_path . '" class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'image\')">';
-}
+                    if ($file_type == "image") {
+                        echo '<img src="' . $file_path . '" class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'image\')">';
+                    }
 
-if ($file_type == "video") {
-    echo '<video class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'video\')">
+                    if ($file_type == "video") {
+                        echo '<video class="gallery-img" onclick="openModal(\'' . $file_path . '\', \'video\')">
             <source src="' . $file_path . '" type="video/mp4">
           </video>';
-}
+                    }
 
 // === POST UI BUTTONS ===
 echo '
     <div class="post-actions">
-        <button class="action-btn like-btn"><i class="bi bi-heart"></i></button>
-        <button class="action-btn comment-btn"><i class="bi bi-chat"></i></button>
         <button class="action-btn delete-btn" data-id="' . $row['post_id'] . '"><i class="bi bi-trash"></i></button>
     </div>
 </div>';
@@ -464,14 +461,15 @@ echo '
         <video id="modalVideo" class="modal-content" controls style="display:none; max-height:90vh;"></video>
     </div>
     <div id="deleteModal" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-content" style="background:#222; padding:20px; border-radius:12px; width:300px; text-align:center;">
-        <h3 style="color:#ff004c; margin-bottom:10px;">Delete Post?</h3>
-        <p style="color:#ccc;">This action is UI only and does nothing.</p>
+        <div class="modal-content"
+            style="background:#222; padding:20px; border-radius:12px; width:300px; text-align:center;">
+            <h3 style="color:#ff004c; margin-bottom:10px;">Delete Post?</h3>
+            <p style="color:#ccc;">This action is UI only and does nothing.</p>
 
-        <button class="edit-btn" id="confirmDelete">Yes, Delete</button>
-        <button class="edit-btn" id="cancelDelete" style="margin-top:10px;">Cancel</button>
+            <button class="edit-btn" id="confirmDelete">Yes, Delete</button>
+            <button class="edit-btn" id="cancelDelete" style="margin-top:10px;">Cancel</button>
+        </div>
     </div>
-</div>
 
     <script>
         const openBtn = document.getElementById('UpdateImageBtn');
@@ -548,37 +546,64 @@ echo '
         }
 
         // ===== UI DELETE ONLY =====
-let deleteModal = document.getElementById("deleteModal");
-let deletePostID = null;
+        let deleteModal = document.getElementById("deleteModal");
+        let deletePostID = null;
 
-// open delete confirmation
+        // open delete confirmation
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                deletePostID = btn.dataset.id;
+                deleteModal.style.display = "flex";
+            });
+        });
+
+        // cancel
+        document.getElementById("cancelDelete").onclick = () => {
+            deleteModal.style.display = "none";
+        };
+
+        // UI only confirm
+        document.getElementById("confirmDelete").onclick = () => {
+            alert("UI ONLY: Post ID " + deletePostID + " would be deleted.");
+            deleteModal.style.display = "none";
+        };
+
+        // close modal on outside click
+        window.onclick = function (e) {
+            if (e.target === deleteModal) {
+                deleteModal.style.display = "none";
+            }
+        };
+
+    </script>
+    <script>    
+       // DELETE POST (AJAX)
 document.querySelectorAll(".delete-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        deletePostID = btn.dataset.id;
-        deleteModal.style.display = "flex";
+    btn.addEventListener("click", function () {
+        const postId = this.dataset.id;
+
+        if (!confirm("Do you really want to delete this post?")) return;
+
+        fetch("delete_post.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "post_id=" + postId
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Remove post from UI
+                const card = document.querySelector(`[data-postid='${postId}']`);
+                if (card) card.remove();
+            } else {
+                alert("Failed to delete post!");
+            }
+        })
+        .catch(err => console.log(err));
     });
 });
 
-// cancel
-document.getElementById("cancelDelete").onclick = () => {
-    deleteModal.style.display = "none";
-};
-
-// UI only confirm
-document.getElementById("confirmDelete").onclick = () => {
-    alert("UI ONLY: Post ID " + deletePostID + " would be deleted.");
-    deleteModal.style.display = "none";
-};
-
-// close modal on outside click
-window.onclick = function(e) {
-    if (e.target === deleteModal) {
-        deleteModal.style.display = "none";
-    }
-};
-
     </script>
-
 </body>
 
 </html>

@@ -26,9 +26,11 @@ Day-2
 
 Day-3
 -all page check session session for redirect
--see there posts ,
+-recive all messages and send reply message
+-see there posts 
 
-pending like it , comment it
+pending 
+-like it , comment it
 -my_account upload profile photo is not working  
 -my_account inside add post cancle button is not working 
 
