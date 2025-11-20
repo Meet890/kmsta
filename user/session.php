@@ -49,7 +49,10 @@ if (isset($_SESSION["user_id"]) && isset($_SESSION["acc_id"])) {
 //    var_dump($_SESSION);
 //    echo '</pre>';
 } elseif (!(isset($_SESSION["acc_id"]) && $_SESSION["user_id"])) {
-    header("Location:login.php");
+    if ($request_uri != '/kmsta/user/login.php') {
+        header("Location:login.php");
+    }
+    
     // echo '<pre>';
     // var_dump($_SESSION);
     // echo '</pre>';
