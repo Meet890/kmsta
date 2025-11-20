@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 19, 2025 at 02:57 PM
+-- Generation Time: Nov 20, 2025 at 02:26 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -71,22 +71,6 @@ CREATE TABLE IF NOT EXISTS `block` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
---
-
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE IF NOT EXISTS `comment` (
-  `comm_id` int NOT NULL AUTO_INCREMENT,
-  `post_id` int DEFAULT NULL,
-  `comm_by` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  PRIMARY KEY (`comm_id`),
-  KEY `comm_by` (`comm_by`(250)),
-  KEY `post_id` (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `followers`
 --
 
@@ -97,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `followers` (
   `following_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `followers`
@@ -107,24 +91,8 @@ INSERT INTO `followers` (`id`, `follower_id`, `following_id`, `created_at`) VALU
 (33, 109, 107, '2025-11-19 12:47:26'),
 (24, 107, 109, '2025-11-19 10:48:13'),
 (23, 107, 102, '2025-11-19 10:48:12'),
-(39, 107, 101, '2025-11-19 14:49:02'),
+(40, 107, 101, '2025-11-20 06:02:09'),
 (30, 109, 102, '2025-11-19 12:14:18');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `likes`
---
-
-DROP TABLE IF EXISTS `likes`;
-CREATE TABLE IF NOT EXISTS `likes` (
-  `like_id` int NOT NULL,
-  `post_id` int NOT NULL,
-  `like_by` longtext NOT NULL,
-  PRIMARY KEY (`like_id`),
-  UNIQUE KEY `like_by` (`like_by`(250)) USING BTREE,
-  KEY `post_id` (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -141,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `is_read` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`msg_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `messages`
@@ -149,7 +117,11 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 INSERT INTO `messages` (`msg_id`, `sender_id`, `receiver_id`, `message_text`, `is_read`, `created_at`) VALUES
 (1, 107, 101, 'asdas', 0, '2025-11-19 14:54:33'),
-(2, 107, 101, 'hello', 0, '2025-11-19 14:56:19');
+(2, 107, 101, 'hello', 0, '2025-11-19 14:56:19'),
+(3, 107, 101, 'hello', 0, '2025-11-20 06:02:25'),
+(4, 0, 0, '', 1, '2025-11-20 06:30:31'),
+(5, 0, 0, '', 0, '2025-11-20 06:38:49'),
+(6, 109, 107, 'hieeee', 0, '2025-11-20 08:20:40');
 
 -- --------------------------------------------------------
 
@@ -187,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`post_id`),
   KEY `like_id` (`like_id`,`comment_id`),
   KEY `acc_id` (`acc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `post`
@@ -198,8 +170,56 @@ INSERT INTO `post` (`post_id`, `acc_id`, `post_type`, `post_location`, `post_cap
 (3, 107, 'image', 'post_691c69c03a77f3.79689772_9fe5c0ba18.jpg', 'SSC', NULL, NULL),
 (4, 107, 'image', 'post_691c6a193350f1.90359808_1d3ac69781.jpg', 'HSC', NULL, NULL),
 (5, 107, 'image', 'post_691c6b9d485d53.29661086_085c43e267.jpg', 'Lc', NULL, NULL),
-(6, 107, 'image', 'post_691c76bc0cb9e8.29389075_d9fc9774ac.png', 'sad', NULL, NULL),
-(7, 107, 'image', 'post_691c7fc2400431.05158758_c37522cfd0.png', 'sadasd', NULL, NULL);
+(7, 107, 'image', 'post_691c7fc2400431.05158758_c37522cfd0.png', 'sadasd', NULL, NULL),
+(8, 109, 'image', 'post_691ecf32ed02c9.27753607_02375f2d06.png', '', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+DROP TABLE IF EXISTS `post_comments`;
+CREATE TABLE IF NOT EXISTS `post_comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `comment`, `created_at`) VALUES
+(5, 8, 107, 'ad', '2025-11-20 13:59:29'),
+(6, 8, 107, 'sdfsdgdsf', '2025-11-20 14:03:42'),
+(7, 5, 107, 'sdgfdgdfg', '2025-11-20 14:03:59'),
+(8, 8, 107, 'asdsagfdshfgh', '2025-11-20 14:07:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_likes`
+--
+
+DROP TABLE IF EXISTS `post_likes`;
+CREATE TABLE IF NOT EXISTS `post_likes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post_likes`
+--
+
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `created_at`) VALUES
+(7, 6, 9, '2025-11-20 14:07:18');
 
 -- --------------------------------------------------------
 
@@ -252,18 +272,6 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `block`
   ADD CONSTRAINT `block_ibfk_1` FOREIGN KEY (`acc_id`) REFERENCES `accounts` (`acc_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `comment`
---
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `likes`
---
-ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `pending_request`
