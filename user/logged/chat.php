@@ -137,7 +137,7 @@ body {
 
 <!-- Header -->
 <div class="chat-header">
-    <img src="uploads/<?php echo $user['acc_profile_photo']; ?>">
+    <img src="uploads/<?php echo ($user['acc_profile_photo'] ?? 'default2.png'); ?>">
     <b>@<?php echo $user['acc_username']; ?></b>
 </div>
 
