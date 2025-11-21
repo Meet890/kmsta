@@ -6,6 +6,9 @@
 </head>
 
 <body>
+    <form action="users.php" method="post">
+<button class="edit-btn" name="follow_btn" style="background:#0095f6;">Back</button>
+</form>
     <h2>Update Your Details</h2>
     <form action="" method="post">
         

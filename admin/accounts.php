@@ -1,7 +1,7 @@
 <?php
 require 'conn.php';
 
-$selectuser = "SELECT * FROM user_details";
+$selectuser = "SELECT * FROM accounts";
 $res = $conn->query($selectuser);
 ?>
 
@@ -52,36 +52,36 @@ $res = $conn->query($selectuser);
 </head>
 
 <body>
+    <h2 style="text-align:center;">User Details Table</h2>
+    <form action="index.php" method="post">
+    <button class="edit-btn" name="follow_btn" style="background:#0095f6;">Back</button>
+    </form>
 
-<h2 style="text-align:center;">User Details Table</h2>
-<form action="index.php" method="post">
-<button class="edit-btn" name="follow_btn" style="background:#0095f6;">Back</button>
-</form>
 <table>
     <tr>
-        <th>User Id</th>
-        <th>User Name</th>
-        <th>Age</th>
-        <th>Gender</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>DOB</th>
+        <th>Account Id </th>
+        <th>User Id </th>
+        <th>Account profile photo </th>
+        <th>Account Bio </th>
+        <th>Account username</th>
+        <th>Account Password</th>
         <th>Action</th>
     </tr>
 
     <?php
     while ($row = $res->fetch_assoc()) {
         echo "<tr>
+                <td>{$row['acc_id']}</td>
                 <td>{$row['user_id']}</td>
-                <td>{$row['user_name']}</td>
-                <td>{$row['user_age']}</td>
-                <td>{$row['user_gender']}</td>
-                <td>{$row['user_ph']}</td>
-                <td>{$row['user_email']}</td>
-                <td>{$row['user_dob']}</td>
+                <td>{$row['acc_profile_photo']}</td>
+                <td>{$row['acc_bio']}</td>
+                <td>{$row['acc_username']}</td>
+                <td>{$row['acc_password']}</td>
                 <td>
-                    <a class='btn update' href='update_user.php?id={$row['user_id']}'>Update</a>
-                    <a class='btn delete' href='delete_user.php?id={$row['user_id']}' onclick='return confirm(\"Are you sure?\");'>Delete</a>
+
+                    <a class='btn update' href='view_profile.php?id={$row['acc_id']}'>View</a>
+                    <a class='btn update' href='update_account.php?id={$row['acc_id']}'>Update</a>
+                    <a class='btn delete' href='delete_account.php?id={$row['acc_id']}' onclick='return confirm(\"Are you sure?\");'>Delete</a>
                 </td>
               </tr>";
     }

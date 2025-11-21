@@ -1,8 +1,9 @@
 <?php
-session_start();
-  echo '<pre>';
-    var_dump($_SESSION);
-    echo '</pre>';
+require "conn.php";
+// session_start();
+  // echo '<pre>';
+  //   var_dump($_SESSION);
+  //   echo '</pre>';
 
 ?>
 
@@ -60,7 +61,7 @@ session_start();
           <a href="#">Reports</a>
           <a href="#">Messages</a>
           <a href="#">Analytics</a>
-          <a href="#">Settings</a>
+          <a href="../user/logout.php">Logout</a>
         </div>
 
         <!-- MAIN CONTENT -->
@@ -86,7 +87,7 @@ session_start();
                 <div class="card-body">
                   <h5 class="card-title">Accounts</h5>
                   <p class="card-text">Review account details and ownership data.</p>
-                  <a href="#" class="btn btn-primary">Manage Accounts</a>
+                  <a href="accounts.php" class="btn btn-primary">Manage Accounts</a>
                 </div>
               </div>
             </div>

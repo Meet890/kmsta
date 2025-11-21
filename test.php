@@ -41,17 +41,15 @@ Day-4
 -search error solved
 -list persons for chat-list 
 -get dynamic chats from messages pages
--admin can update user details
-
-
+-admin can update user,delete user
+-admin can view account and view live posts and followers,following
+-Admin panel
 
 
 Pendding
--account edit form
--Admin panel
 -add story's
 -view other persons story's
-
+-logged/edit_acc_details.php update is not working
 *****errors*****
 
 
@@ -69,6 +67,7 @@ Array
     [acc_profile_photo] => 
     [acc_bio] => Hello i am meet 
 )
+
 admin...
 array (size=3)
   'admin_id' => string '1' (length=1)

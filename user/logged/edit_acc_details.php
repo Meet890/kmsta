@@ -6,9 +6,9 @@ if(!isset($_SESSION['user_id'])){
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['acc_id'];
 
-$sql = "SELECT * FROM accounts WHERE user_id = ?";
+$sql = "SELECT * FROM accounts WHERE acc_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -20,25 +20,9 @@ if(isset($_POST['update_profile'])){
     $bio = $_POST['bio'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $profile_photo = $user['acc_profile_photo'];
+    
 
-    if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['name'] != ""){
-        $file_name = $_FILES['profile_photo']['name'];
-        $file_tmp = $_FILES['profile_photo']['tmp_name'];
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $allowed_ext = array("jpg","jpeg","png");
-
-        if(in_array($file_ext, $allowed_ext)){
-            $new_name = "uploads/".uniqid().".".$file_ext;
-            if(move_uploaded_file($file_tmp, $new_name)){
-                $profile_photo = $new_name;
-            } else {
-                $error = "Failed to upload photo.";
-            }
-        } else {
-            $error = "Only JPG, JPEG, PNG files are allowed.";
-        }
-    }
+    
 
     $password_sql = "";
     if(!empty($password)){
@@ -51,14 +35,18 @@ if(isset($_POST['update_profile'])){
     }
 
     if(!isset($error)){
-        $update_sql = "UPDATE accounts SET acc_username = ?, acc_bio = ?, acc_profile_photo = ? $password_sql WHERE user_id = ?";
+        $update_sql = "UPDATE accounts SET acc_username = ?, acc_bio = ? $password_sql WHERE user_id = ?";
         $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("sssi", $username, $bio, $profile_photo, $user_id);
+        $stmt->bind_param("ssi", $username, $bio,  $user_id);
         if($stmt->execute()){
             $success = "Profile updated successfully!";
             $user['acc_username'] = $username;
             $user['acc_bio'] = $bio;
-            $user['acc_profile_photo'] = $profile_photo;
+            // $user['acc_profile_photo'] = $profile_photo;
+
+            // if ($success){
+            //     header('Location:my_account.php');
+            // }
         } else {
             $error = "Failed to update profile.";
         }
@@ -96,8 +84,7 @@ button:hover { transform:scale(1.05); }
     <?php if(isset($success)) echo "<div class='alert success'>$success</div>"; ?>
 
     <form method="post" enctype="multipart/form-data">
-        <img src="<?php echo $user['acc_profile_photo']; ?>" alt="Profile Photo" class="profile-img"><br>
-        <input type="file" name="profile_photo" accept=".jpg,.jpeg,.png">
+        
         <input type="text" name="username" placeholder="Username" value="<?php echo htmlspecialchars($user['acc_username']); ?>" required>
         <textarea name="bio" placeholder="Bio"><?php echo htmlspecialchars($user['acc_bio']); ?></textarea>
         <input type="password" name="password" placeholder="New Password (leave blank if unchanged)">

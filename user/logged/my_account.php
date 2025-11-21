@@ -372,7 +372,7 @@ if ($result_user && $result_user->num_rows > 0) {
                     <div class="username"><?php echo $acc_username; ?></div>
                 </div>
                 <button class="edit-btn" id="UpdateImageBtn">Update Photo</button>
-                <a href="edit_profile.php"><button class="edit-btn">Edit Profile</button></a>
+                <a href="edit_acc_details.php"><button class="edit-btn">Edit Profile</button></a>
                 <button class="edit-btn" id="addPostBtn">Add Post</button>
 
                 <div class="stats">
