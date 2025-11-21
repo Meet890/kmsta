@@ -12,9 +12,9 @@ $users = [];
 /* -----------------------------------------
    SEARCH USERS
 ----------------------------------------- */
-if ($_GET['query'] == "") {
-   
-    $query = mysqli_real_escape_string($conn, $_GET['query']);
+if (isset($_GET['query']) == "") {
+    
+    // $query = mysqli_real_escape_string($conn, $_GET['query']);
     $sql = "SELECT * FROM accounts ";
     $users = mysqli_query($conn, $sql);
 } elseif (isset($_GET['query'])) {
@@ -31,7 +31,6 @@ if ($_GET['query'] == "") {
 ----------------------------------------- */
 
 if (isset($_POST['follow_btn'])) {
-
     $follower = $acc_id;               // logged in user
     $following = $_POST['follow_id'];  // target user
 
