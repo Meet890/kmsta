@@ -57,6 +57,7 @@ $res = $conn->query($selectuser);
 
 <table>
     <tr>
+        <th>User Id</th>
         <th>User Name</th>
         <th>Age</th>
         <th>Gender</th>
@@ -69,6 +70,7 @@ $res = $conn->query($selectuser);
     <?php
     while ($row = $res->fetch_assoc()) {
         echo "<tr>
+                <td>{$row['user_id']}</td>
                 <td>{$row['user_name']}</td>
                 <td>{$row['user_age']}</td>
                 <td>{$row['user_gender']}</td>
