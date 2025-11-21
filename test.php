@@ -41,7 +41,7 @@ Day-4
 -search error solved
 -list persons for chat-list 
 -get dynamic chats from messages pages
-
+-admin can update user details
 
 
 

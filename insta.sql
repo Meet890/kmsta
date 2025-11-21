@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 20, 2025 at 02:26 PM
+-- Generation Time: Nov 21, 2025 at 08:11 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -55,6 +55,30 @@ INSERT INTO `accounts` (`acc_id`, `user_id`, `acc_profile_photo`, `acc_bio`, `ac
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `admin_id` int NOT NULL AUTO_INCREMENT,
+  `admin_name` varchar(100) NOT NULL,
+  `admin_email` varchar(150) NOT NULL,
+  `admin_password` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`admin_id`),
+  UNIQUE KEY `admin_email` (`admin_email`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_name`, `admin_email`, `admin_password`, `created_at`) VALUES
+(1, 'admin_meet', 'adminmeet123@gmail.com', 'meet@123', '2025-11-21 07:36:57');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `block`
 --
 
@@ -81,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `followers` (
   `following_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `followers`
@@ -92,7 +116,9 @@ INSERT INTO `followers` (`id`, `follower_id`, `following_id`, `created_at`) VALU
 (24, 107, 109, '2025-11-19 10:48:13'),
 (23, 107, 102, '2025-11-19 10:48:12'),
 (40, 107, 101, '2025-11-20 06:02:09'),
-(30, 109, 102, '2025-11-19 12:14:18');
+(30, 109, 102, '2025-11-19 12:14:18'),
+(41, 107, 111, '2025-11-21 06:58:31'),
+(42, 107, 110, '2025-11-21 07:00:21');
 
 -- --------------------------------------------------------
 
@@ -109,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `is_read` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`msg_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `messages`
@@ -119,9 +145,9 @@ INSERT INTO `messages` (`msg_id`, `sender_id`, `receiver_id`, `message_text`, `i
 (1, 107, 101, 'asdas', 0, '2025-11-19 14:54:33'),
 (2, 107, 101, 'hello', 0, '2025-11-19 14:56:19'),
 (3, 107, 101, 'hello', 0, '2025-11-20 06:02:25'),
-(4, 0, 0, '', 1, '2025-11-20 06:30:31'),
-(5, 0, 0, '', 0, '2025-11-20 06:38:49'),
-(6, 109, 107, 'hieeee', 0, '2025-11-20 08:20:40');
+(6, 109, 107, 'hieeee', 1, '2025-11-20 08:20:40'),
+(7, 107, 111, 'hieee', 0, '2025-11-21 06:58:39'),
+(8, 107, 110, 'asdasdddsf', 0, '2025-11-21 07:00:25');
 
 -- --------------------------------------------------------
 
@@ -189,16 +215,6 @@ CREATE TABLE IF NOT EXISTS `post_comments` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `post_comments`
---
-
-INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `comment`, `created_at`) VALUES
-(5, 8, 107, 'ad', '2025-11-20 13:59:29'),
-(6, 8, 107, 'sdfsdgdsf', '2025-11-20 14:03:42'),
-(7, 5, 107, 'sdgfdgdfg', '2025-11-20 14:03:59'),
-(8, 8, 107, 'asdsagfdshfgh', '2025-11-20 14:07:53');
-
 -- --------------------------------------------------------
 
 --
@@ -248,12 +264,12 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 --
 
 INSERT INTO `user_details` (`user_id`, `user_name`, `user_age`, `user_gender`, `user_ph`, `user_email`, `user_dob`, `user_password`) VALUES
-(1, 'Meet', 24, 'Male', 7774441112, 'meetrn7890@gmail.com', '2002-11-27', 'meet@2002'),
+(1, 'Meet', 24, 'Male', 0, '', '2002-11-27', 'meet@2002'),
 (2, 'Krupal', 22, 'Male', 9999999989, 'krupal@gmail.com', '2004-11-27', 'krupal@123'),
-(6, 'Krupal2', 22, 'Male', 9999999999, 'krupal2@gmail.com', '2004-11-27', 'krupal@123'),
+(6, 'meet', 23, 'Male', 1122112233, 'meet@gmail.coooommm', '2025-11-29', 'hellooo'),
 (8, 'uday', 22, 'Male', 123456456, 'uday@gmail.com', '2002-11-27', 'uday@123'),
 (9, 'meet', 26, 'Male', 4564564564, 'meet12@gmail.com', '2002-11-27', 'Meet@123'),
-(10, 'anjli', 23, 'Female', 1112223334, 'anjli@gmail.com', '2003-11-27', 'anjli@123'),
+(10, 'meet', 23, 'Male', 54987521654, 'meet1A2@gmail.com', '1233-03-12', 'SADSAD'),
 (11, 'anjli2', 23, 'Female', 1112223335, 'anjli2@gmail.com', '2003-11-27', 'anjli@123'),
 (12, 'krunal', 22, 'Male', 5656565656, 'krunal@gmail.com', '2004-11-27', 'krunal@123');
 
