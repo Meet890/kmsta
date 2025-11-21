@@ -24,17 +24,20 @@ elseif (!(isset($_SESSION["acc_id"]) && $_SESSION["user_id"])) {
     // echo '<pre>';
     // var_dump($_SESSION);
     // echo '</pre>';
-
-}
- elseif (isset($_SESSION["acc_id"]) && $_SESSION["user_id"]) {
     
-
-
+}elseif(!isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
+    header("Location: ../login.php");
+    exit();
+}
+elseif (isset($_SESSION["acc_id"]) && $_SESSION["user_id"]) {
+    
+    
+    
     // header("Location:home.php");
-// echo '<pre>';
-//     var_dump($_SESSION);
-//     echo '</pre>';
-
+    // echo '<pre>';
+    //     var_dump($_SESSION);
+    //     echo '</pre>';
+    
 }
 else{
     echo '<pre>';

@@ -1,3 +1,11 @@
+<?php
+session_start();
+  echo '<pre>';
+    var_dump($_SESSION);
+    echo '</pre>';
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>

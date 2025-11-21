@@ -40,24 +40,28 @@ $request_uri = $_SERVER['REQUEST_URI'];
 if (isset($_SESSION["user_id"]) && isset($_SESSION["acc_id"])) {
 
     header("Location:logged/home.php");
-} elseif (isset($_SESSION["user_id"]) && !isset($_SESSION["acc_id"])) {
+} 
+elseif (isset($_SESSION["user_id"]) && !isset($_SESSION["acc_id"])) {
     if ($request_uri != '/kmsta/user/show_account.php') {
         header("Location:show_account.php");
     }
     //    
-//    echo '<pre>';
-//    var_dump($_SESSION);
-//    echo '</pre>';
-} elseif (!(isset($_SESSION["acc_id"]) && $_SESSION["user_id"])) {
+    //    echo '<pre>';
+    //    var_dump($_SESSION);
+    //    echo '</pre>';
+}
+
+ elseif (!(isset($_SESSION["acc_id"]) && $_SESSION["user_id"])) {
     if ($request_uri != '/kmsta/user/login.php') {
         header("Location:login.php");
     }
-    
+
     // echo '<pre>';
     // var_dump($_SESSION);
     // echo '</pre>';
 
 }
+
 
 
 

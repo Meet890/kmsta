@@ -58,6 +58,7 @@ Pendding
 
 
 sessions 
+users...
 Array
 (
     [user_id] => 9
@@ -68,6 +69,13 @@ Array
     [acc_profile_photo] => 
     [acc_bio] => Hello i am meet 
 )
+admin...
+array (size=3)
+  'admin_id' => string '1' (length=1)
+  'admin_name' => string 'admin_meet' (length=10)
+  'role' => string 'admin' (length=5)
+
+
 
 -->
 <!-- for add comments
