@@ -37,10 +37,17 @@ Day-3 Dummy Instagram (new mini project)
 -delete own posts
 
 
+Day-4
+-search error solved
+-list persons for chat-list 
+-get dynamic chats from messages pages
+
+
 
 
 
 Pendding
+-account edit form
 -Admin panel
 -add story's
 -view other persons story's

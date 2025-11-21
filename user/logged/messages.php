@@ -1,0 +1,227 @@
+<?php
+include "../conn.php";
+// session_start();
+$user_id = $_SESSION['acc_id']; // logged-in user
+
+$sql = "SELECT a.acc_id, a.acc_username, a.acc_profile_photo, a.acc_bio
+        FROM followers f
+        JOIN accounts a ON f.following_id = a.acc_id
+        WHERE f.follower_id = $user_id";
+
+$result = mysqli_query($conn, $sql);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Search</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide-icons@latest"></script>
+
+    <style>
+        /* GLOBAL */
+        body {
+            margin: 0;
+            background: #0f0f0f;
+            font-family: "Poppins", sans-serif;
+            color: white;
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 10px;
+        }
+
+        .search-heading {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-heading span {
+            color: #ff004c;
+        }
+
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: inherit;
+            /* or a specific color */
+            text-decoration: none;
+        }
+
+        .user-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            background: rgba(25, 25, 25, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(255, 0, 76, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 14px;
+            transition: 0.3s;
+        }
+
+        .profile-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(255, 0, 76, 0.3);
+        }
+
+        .user-card:hover {
+            border-color: #ff004c;
+            transform: translateY(-3px);
+        }
+
+        .user-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 16px;
+            border: 2px solid #ff004c;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .user-username {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* SEARCH RESULTS */
+        .user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(25, 25, 25, 0.8);
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .user-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #ff004c;
+            object-fit: cover;
+        }
+
+        /* BUTTONS */
+        .follow-btn {
+            background: #0095f6;
+            color: white;
+            padding: 8px 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .following-btn {
+            background: transparent;
+            border: 1px solid #555;
+            color: white;
+            padding: 8px 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <?php include "navbar.php"; ?>
+
+    <div class="search-box">
+        <h2 class="search-heading">Chat with <span>Friends</span></h2>
+
+        <div class="user-grid">
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($u = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <div class="user-card chat-user" data-userid="<?= $u['acc_id'] ?>">
+                        <div class="user-content">
+                            <img src="uploads/<?= $u['acc_profile_photo'] ?: 'default2.png' ?>" class="user-img">
+                            <div class="user-info">
+                                <div class="user-name">@<?= $u['acc_username']?></div>
+                                <div class="user-username"><?= $u['acc_bio'] ?></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                }
+            } else {
+                echo "<p style='color:#bbb;'>You are not following anyone yet.</p>";
+            }
+            ?>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.querySelectorAll(".chat-user").forEach(user => {
+            user.addEventListener("click", function () {
+                const otherUser = this.dataset.userid;
+                window.location.href = "chat.php?user=" + otherUser;
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
